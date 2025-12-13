@@ -1,10 +1,8 @@
 file(REMOVE_RECURSE
-  "../bin/solver.exe"
-  "../bin/solver.exe.manifest"
+  "../bin/solver"
   "../bin/solver.pdb"
-  "CMakeFiles/poker_solver_cli.dir/cli/main.cpp.obj"
-  "CMakeFiles/poker_solver_cli.dir/cli/main.cpp.obj.d"
-  "solver.lib"
+  "CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o"
+  "CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

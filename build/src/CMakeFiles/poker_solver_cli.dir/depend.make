@@ -1,2 +1,2 @@
-﻿# Empty dependencies file for poker_solver_cli.
+# Empty dependencies file for poker_solver_cli.
 # This may be replaced when dependencies are built.

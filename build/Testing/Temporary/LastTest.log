@@ -1,18 +1,48 @@
-Start testing: Dec 13 11:48 Central Standard Time
+Start testing: Dec 13 14:41 CST
 ----------------------------------------------------------
-1/1 Testing: util_tests
-1/1 Test: util_tests
-Command: "C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/tests/util_tests.exe"
-Directory: C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/tests
-"util_tests" start time: Dec 13 11:48 Central Standard Time
+1/3 Testing: util_tests
+1/3 Test: util_tests
+Command: "/home/jthcode/projects/poker_solver_cfr/build/tests/util_tests"
+Directory: /home/jthcode/projects/poker_solver_cfr/build/tests
+"util_tests" start time: Dec 13 14:41 CST
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.14 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"util_tests" end time: Dec 13 11:48 Central Standard Time
+"util_tests" end time: Dec 13 14:41 CST
 "util_tests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Dec 13 11:48 Central Standard Time
+2/3 Testing: board_tests
+2/3 Test: board_tests
+Command: "/home/jthcode/projects/poker_solver_cfr/build/tests/board_tests"
+Directory: /home/jthcode/projects/poker_solver_cfr/build/tests
+"board_tests" start time: Dec 13 14:41 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"board_tests" end time: Dec 13 14:41 CST
+"board_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: ranges_tests
+3/3 Test: ranges_tests
+Command: "/home/jthcode/projects/poker_solver_cfr/build/tests/ranges_tests"
+Directory: /home/jthcode/projects/poker_solver_cfr/build/tests
+"ranges_tests" start time: Dec 13 14:41 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"ranges_tests" end time: Dec 13 14:41 CST
+"ranges_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Dec 13 14:41 CST

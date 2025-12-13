@@ -5,7 +5,7 @@ target_compile_features(poker_solver_core INTERFACE cxx_std_17)
 add_executable(poker_solver_cli
   cli/main.cpp
 )
-target_link_libraries(poker_solver_cli PRIVATE poker_solver_core)
+target_link_libraries(poker_solver_cli PRIVATE poker_solver_core Threads::Threads)
 
 if(MSVC)
   target_compile_options(poker_solver_cli PRIVATE /W4 /permissive- /WX-)

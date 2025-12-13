@@ -7,12 +7,13 @@
 - `src/io/`: JSONL writer, preflop range loader, config parsing.
 - `src/util/`: RNG, logging, timers, metrics.
 - `tests/`: mirrors `src/` for unit and integration tests.
-- `data/preflop-ranges/`: provided preflop ranges (JSON).
+- `preflop-ranges/`: provided preflop ranges (JSON) at repo root (align loader accordingly).
 - `scripts/`: helper scripts (benchmarks, sample runs).
 
 ## Build, Test, and Development Commands
-- Configure: `cmake -S . -B build -DCMAKE_BUILD_TYPE=Release` (or Debug).
-- Build all: `cmake --build build -j$(nproc)` (use `-j` appropriate for platform).
+- Primary environment: WSL/Linux (Bash). Windows batch scripts in `scripts/` are legacy only.
+- Configure (Debug recommended while developing): `cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug` (omit `-G Ninja` if not installed).
+- Build all: `cmake --build build -j$(nproc)` (or `cmake --build build` with Ninja handling jobs).
 - Run unit/integration tests: `ctest --test-dir build --output-on-failure`.
 - Sample run (after build): `./build/bin/solver --number_of_situations 10 --output out.jsonl --seed 42`.
 

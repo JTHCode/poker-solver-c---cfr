@@ -1,0 +1,9 @@
+build/
+*.exe
+*.ilk
+*.pdb
+*.obj
+*.vcxproj*
+*.sln
+*.user
+*.opensdf

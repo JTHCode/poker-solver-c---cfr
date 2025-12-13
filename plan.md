@@ -101,11 +101,11 @@
 - [x] 2) Utilities: RNG, timer, logging: implement seeded RNG wrapper (std::mt19937_64), scoped timer utility, simple logger with levels; unit tests verifying deterministic seeding and timing wrapper behavior.  
   - **Dev Notes:** Added `util/rng.h` (deterministic mt19937_64 wrapper) and `util/timer.h` (steady_clock timer). Unit tests in `tests/util_tests.cpp` cover RNG determinism/range and timer monotonicity; ensure toolchain available before running.
   
-- [ ] 3) Cards/board utilities and board generator: implement card representation, deck shuffling/drawing, collision checks; board generator that draws flop/turn/river from remaining deck; tests for uniqueness and exclusion of known cards.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [x] 3) Cards/board utilities and board generator: implement card representation, deck shuffling/drawing, collision checks; board generator that draws flop/turn/river from remaining deck; tests for uniqueness and exclusion of known cards.  
+  - **Dev Notes:** Added `core/cards.h`, `core/board.h`, and `core/board_gen.h`; board generation removes blockers, shuffles deck with `util::Rng`, and deals flop/turn/river. Tests in `tests/board_tests.cpp` cover deck uniqueness, deterministic boards via seed, blocker exclusion, and duplicate-blocker error.
   
-- [ ] 4) Ranges loader and validation: implement JSON loader for `/preflop-ranges`, normalization, and sampling API (weighted combo sampling); tests for file parse, normalization sums, and collision-free sampling with provided blockers.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 4) Ranges loader and validation: implement JSON loader for `/preflop-ranges`, normalization, and sampling API (weighted combo sampling); tests for file parse, normalization sums, and collision-free sampling with provided blockers.  
+  - **Dev Notes:** 12/13/2025: Added `io/preflop_range.h` loader using the root `preflop-ranges/` JSON files, normalizing combo weights and providing blocker-aware sampling; tests cover parse/normalization and blocker exclusion.
   
 - [ ] 5) Game state, actions, betting rules; unit tests on legality and stack math: encode positions, streets, pot/stacks/to-call tracking; action validation (fold/call/check/bet/raise/all-in) with allowed bet/raise sizes; pot updates and stack deductions; tests for edge cases (all-in caps, min-raise enforcement, transition check/call symmetry).  
   - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._

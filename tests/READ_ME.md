@@ -1,5 +1,13 @@
-**To run all unit tests:**
+**WSL/Linux build & test (recommended):**
 
-`cmake -S . -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug`       
-`cmake --build build`                                                     
-`ctest --test-dir build --output-on-failure`
+```bash
+./scripts/test.sh
+```
+
+**Windows (legacy):**
+
+```powershell
+cmake -S . -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+ctest --test-dir build --output-on-failure
+```

@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/util_tests.dir/util_tests.cpp.obj"
-  "CMakeFiles/util_tests.dir/util_tests.cpp.obj.d"
-  "util_tests.exe"
-  "util_tests.exe.manifest"
-  "util_tests.lib"
+  "CMakeFiles/util_tests.dir/util_tests.cpp.o"
+  "CMakeFiles/util_tests.dir/util_tests.cpp.o.d"
+  "util_tests"
   "util_tests.pdb"
 )
 

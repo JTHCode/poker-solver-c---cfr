@@ -6,8 +6,15 @@ set -euo pipefail
 BUILD_TYPE="${1:-Debug}"
 
 GEN_ARGS=()
-if command -v ninja >/dev/null 2>&1; then
-  GEN_ARGS=(-G Ninja)
+if [[ -f build/CMakeCache.txt ]]; then
+  EXISTING_GEN=$(grep -E '^CMAKE_GENERATOR:INTERNAL=' build/CMakeCache.txt | cut -d= -f2-)
+  echo "Reusing existing generator: ${EXISTING_GEN}"
+else
+  if command -v ninja >/dev/null 2>&1; then
+    GEN_ARGS=(-G Ninja)
+  else
+    GEN_ARGS=(-G "Unix Makefiles")
+  fi
 fi
 
 cmake -S . -B build "${GEN_ARGS[@]}" -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"

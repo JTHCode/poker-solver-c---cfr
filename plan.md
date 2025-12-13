@@ -107,17 +107,17 @@
 - [X] 4) Ranges loader and validation: implement JSON loader for `/preflop-ranges`, normalization, and sampling API (weighted combo sampling); tests for file parse, normalization sums, and collision-free sampling with provided blockers.  
   - **Dev Notes:** 12/13/2025: Added `io/preflop_range.h` loader using the root `preflop-ranges/` JSON files, normalizing combo weights and providing blocker-aware sampling; tests cover parse/normalization and blocker exclusion.
   
-- [ ] 5) Game state, actions, betting rules; unit tests on legality and stack math: encode positions, streets, pot/stacks/to-call tracking; action validation (fold/call/check/bet/raise/all-in) with allowed bet/raise sizes; pot updates and stack deductions; tests for edge cases (all-in caps, min-raise enforcement, transition check/call symmetry).  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 5) Game state, actions, betting rules; unit tests on legality and stack math: encode positions, streets, pot/stacks/to-call tracking; action validation (fold/call/check/bet/raise/all-in) with allowed bet/raise sizes; pot updates and stack deductions; tests for edge cases (all-in caps, min-raise enforcement, transition check/call symmetry).  
+  - **Dev Notes:** 12/13/2025: Added `core/game_state.h` with basic streets, action types, legal action generation, min-raise enforcement, and blocker-aware stack/pot updates including partial all-ins; tests (`actions_tests`) cover check/call symmetry, min-raise, short-stack all-in caps, and raise application.
   
-- [ ] 6) Tree structures and info-set keying: define node representation, child linkage, terminal flags, and info-set key builder using state abstraction (street, position, action history, hole-card/board buckets as chosen); tests for deterministic keys and terminal detection.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 6) Tree structures and info-set keying: define node representation, child linkage, terminal flags, and info-set key builder using state abstraction (street, position, action history, hole-card/board buckets as chosen); tests for deterministic keys and terminal detection.  
+  - **Dev Notes:** 12/13/2025: Added `core/tree.h` with simple node representation, owners, and deterministic info-set key derived from game state and owner; tests (`tree_tests`) verify deterministic keys, owner separation, and terminal flag inclusion.
   
-- [ ] 7) CFR core on toy game; pass Kuhn test; add hand evaluator stub or mocked values: implement regret matching, strategy accumulation, traversal; run on Kuhn poker to verify convergence toward Nash; mock evaluator returning fixed utilities to keep small game testable.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 7) CFR core on toy game; pass Kuhn test; add hand evaluator stub or mocked values: implement regret matching, strategy accumulation, traversal; run on Kuhn poker to verify convergence toward Nash; mock evaluator returning fixed utilities to keep small game testable.  
+  - **Dev Notes:** 12/13/2025: Added a minimal Kuhn poker CFR trainer (`solver/kuhn_cfr.h`) with regret matching and average strategy extraction; added `cfr_tests` validating Kuhn equilibrium structure (K value-bet high, Q rarely bets, J bluff tracks K/3, and correct call/fold behavior vs a bet).
   
-- [ ] 8) Integrate NLHE betting model into CFR; fixed bet/raise sizes; terminal handling: plug real action generator from step 5, connect hand evaluator stub, ensure showdown/all-in resolution; add tests on tiny trees (single street) for payoff correctness.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 8) Integrate NLHE betting model into CFR; fixed bet/raise sizes; terminal handling: plug real action generator from step 5, connect hand evaluator stub, ensure showdown/all-in resolution; add tests on tiny trees (single street) for payoff correctness.  
+  - **Dev Notes:** 12/13/2025: Added `solver/nlhe_cfr.h` integrating CFR traversal with `core::LegalActions`/`ApplyAction` (fixed action sizes) and a stubbed showdown winner; extended `GameState` to track committed chips and street completion for correct fold/showdown payoff math; added `nlhe_cfr_tests` to validate fold-vs-call dominance on a tiny river tree with deterministic showdown outcomes.
   
 - [ ] 9) Scenario generator: positions, preflop action line, board sampling: random hero/villain position selection, sample preflop actions (2.5bb open, 10bb 3-bet) respecting stacks, sample hole cards from ranges, build initial game state with history; tests for validity and no collisions.  
   - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._

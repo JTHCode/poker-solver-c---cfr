@@ -1,4 +1,8 @@
-util_tests 6 0.00137139
-board_tests 6 0.000628833
-ranges_tests 2 0.0188094
+util_tests 19 0.00059303
+board_tests 19 0.00041247
+ranges_tests 15 0.00294406
+actions_tests 13 0.000359108
+tree_tests 8 0.000580334
+cfr_tests 4 0.177208
+nlhe_cfr_tests 2 0.126477
 ---

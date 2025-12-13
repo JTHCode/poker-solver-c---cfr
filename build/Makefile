@@ -178,6 +178,58 @@ ranges_tests/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/build
 .PHONY : ranges_tests/fast
 
+#=============================================================================
+# Target rules for targets named actions_tests
+
+# Build rule for target.
+actions_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 actions_tests
+.PHONY : actions_tests
+
+# fast build rule for target.
+actions_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/actions_tests.dir/build.make tests/CMakeFiles/actions_tests.dir/build
+.PHONY : actions_tests/fast
+
+#=============================================================================
+# Target rules for targets named tree_tests
+
+# Build rule for target.
+tree_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tree_tests
+.PHONY : tree_tests
+
+# fast build rule for target.
+tree_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/build
+.PHONY : tree_tests/fast
+
+#=============================================================================
+# Target rules for targets named cfr_tests
+
+# Build rule for target.
+cfr_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cfr_tests
+.PHONY : cfr_tests
+
+# fast build rule for target.
+cfr_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/build
+.PHONY : cfr_tests/fast
+
+#=============================================================================
+# Target rules for targets named nlhe_cfr_tests
+
+# Build rule for target.
+nlhe_cfr_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlhe_cfr_tests
+.PHONY : nlhe_cfr_tests
+
+# fast build rule for target.
+nlhe_cfr_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/build
+.PHONY : nlhe_cfr_tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -187,9 +239,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... actions_tests"
 	@echo "... board_tests"
+	@echo "... cfr_tests"
+	@echo "... nlhe_cfr_tests"
 	@echo "... poker_solver_cli"
 	@echo "... ranges_tests"
+	@echo "... tree_tests"
 	@echo "... util_tests"
 .PHONY : help
 

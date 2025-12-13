@@ -55,4 +55,8 @@ set(CMAKE_DEPEND_INFO_FILES
   "tests/CMakeFiles/util_tests.dir/DependInfo.cmake"
   "tests/CMakeFiles/board_tests.dir/DependInfo.cmake"
   "tests/CMakeFiles/ranges_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/actions_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/tree_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/cfr_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/nlhe_cfr_tests.dir/DependInfo.cmake"
   )

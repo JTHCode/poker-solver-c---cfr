@@ -168,6 +168,86 @@ ranges_tests/fast:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/build
 .PHONY : ranges_tests/fast
 
+# Convenience name for target.
+tests/CMakeFiles/actions_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/actions_tests.dir/rule
+.PHONY : tests/CMakeFiles/actions_tests.dir/rule
+
+# Convenience name for target.
+actions_tests: tests/CMakeFiles/actions_tests.dir/rule
+.PHONY : actions_tests
+
+# fast build rule for target.
+actions_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/actions_tests.dir/build.make tests/CMakeFiles/actions_tests.dir/build
+.PHONY : actions_tests/fast
+
+# Convenience name for target.
+tests/CMakeFiles/tree_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/tree_tests.dir/rule
+.PHONY : tests/CMakeFiles/tree_tests.dir/rule
+
+# Convenience name for target.
+tree_tests: tests/CMakeFiles/tree_tests.dir/rule
+.PHONY : tree_tests
+
+# fast build rule for target.
+tree_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/build
+.PHONY : tree_tests/fast
+
+# Convenience name for target.
+tests/CMakeFiles/cfr_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/cfr_tests.dir/rule
+.PHONY : tests/CMakeFiles/cfr_tests.dir/rule
+
+# Convenience name for target.
+cfr_tests: tests/CMakeFiles/cfr_tests.dir/rule
+.PHONY : cfr_tests
+
+# fast build rule for target.
+cfr_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/build
+.PHONY : cfr_tests/fast
+
+# Convenience name for target.
+tests/CMakeFiles/nlhe_cfr_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/nlhe_cfr_tests.dir/rule
+.PHONY : tests/CMakeFiles/nlhe_cfr_tests.dir/rule
+
+# Convenience name for target.
+nlhe_cfr_tests: tests/CMakeFiles/nlhe_cfr_tests.dir/rule
+.PHONY : nlhe_cfr_tests
+
+# fast build rule for target.
+nlhe_cfr_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/build
+.PHONY : nlhe_cfr_tests/fast
+
+actions_tests.o: actions_tests.cpp.o
+.PHONY : actions_tests.o
+
+# target to build an object file
+actions_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/actions_tests.dir/build.make tests/CMakeFiles/actions_tests.dir/actions_tests.cpp.o
+.PHONY : actions_tests.cpp.o
+
+actions_tests.i: actions_tests.cpp.i
+.PHONY : actions_tests.i
+
+# target to preprocess a source file
+actions_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/actions_tests.dir/build.make tests/CMakeFiles/actions_tests.dir/actions_tests.cpp.i
+.PHONY : actions_tests.cpp.i
+
+actions_tests.s: actions_tests.cpp.s
+.PHONY : actions_tests.s
+
+# target to generate assembly for a file
+actions_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/actions_tests.dir/build.make tests/CMakeFiles/actions_tests.dir/actions_tests.cpp.s
+.PHONY : actions_tests.cpp.s
+
 board_tests.o: board_tests.cpp.o
 .PHONY : board_tests.o
 
@@ -192,6 +272,54 @@ board_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/board_tests.dir/build.make tests/CMakeFiles/board_tests.dir/board_tests.cpp.s
 .PHONY : board_tests.cpp.s
 
+cfr_tests.o: cfr_tests.cpp.o
+.PHONY : cfr_tests.o
+
+# target to build an object file
+cfr_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/cfr_tests.cpp.o
+.PHONY : cfr_tests.cpp.o
+
+cfr_tests.i: cfr_tests.cpp.i
+.PHONY : cfr_tests.i
+
+# target to preprocess a source file
+cfr_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/cfr_tests.cpp.i
+.PHONY : cfr_tests.cpp.i
+
+cfr_tests.s: cfr_tests.cpp.s
+.PHONY : cfr_tests.s
+
+# target to generate assembly for a file
+cfr_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/cfr_tests.cpp.s
+.PHONY : cfr_tests.cpp.s
+
+nlhe_cfr_tests.o: nlhe_cfr_tests.cpp.o
+.PHONY : nlhe_cfr_tests.o
+
+# target to build an object file
+nlhe_cfr_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/nlhe_cfr_tests.cpp.o
+.PHONY : nlhe_cfr_tests.cpp.o
+
+nlhe_cfr_tests.i: nlhe_cfr_tests.cpp.i
+.PHONY : nlhe_cfr_tests.i
+
+# target to preprocess a source file
+nlhe_cfr_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/nlhe_cfr_tests.cpp.i
+.PHONY : nlhe_cfr_tests.cpp.i
+
+nlhe_cfr_tests.s: nlhe_cfr_tests.cpp.s
+.PHONY : nlhe_cfr_tests.s
+
+# target to generate assembly for a file
+nlhe_cfr_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/nlhe_cfr_tests.cpp.s
+.PHONY : nlhe_cfr_tests.cpp.s
+
 ranges_tests.o: ranges_tests.cpp.o
 .PHONY : ranges_tests.o
 
@@ -215,6 +343,30 @@ ranges_tests.s: ranges_tests.cpp.s
 ranges_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/ranges_tests.cpp.s
 .PHONY : ranges_tests.cpp.s
+
+tree_tests.o: tree_tests.cpp.o
+.PHONY : tree_tests.o
+
+# target to build an object file
+tree_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/tree_tests.cpp.o
+.PHONY : tree_tests.cpp.o
+
+tree_tests.i: tree_tests.cpp.i
+.PHONY : tree_tests.i
+
+# target to preprocess a source file
+tree_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/tree_tests.cpp.i
+.PHONY : tree_tests.cpp.i
+
+tree_tests.s: tree_tests.cpp.s
+.PHONY : tree_tests.s
+
+# target to generate assembly for a file
+tree_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/tree_tests.cpp.s
+.PHONY : tree_tests.cpp.s
 
 util_tests.o: util_tests.cpp.o
 .PHONY : util_tests.o
@@ -249,15 +401,31 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... actions_tests"
 	@echo "... board_tests"
+	@echo "... cfr_tests"
+	@echo "... nlhe_cfr_tests"
 	@echo "... ranges_tests"
+	@echo "... tree_tests"
 	@echo "... util_tests"
+	@echo "... actions_tests.o"
+	@echo "... actions_tests.i"
+	@echo "... actions_tests.s"
 	@echo "... board_tests.o"
 	@echo "... board_tests.i"
 	@echo "... board_tests.s"
+	@echo "... cfr_tests.o"
+	@echo "... cfr_tests.i"
+	@echo "... cfr_tests.s"
+	@echo "... nlhe_cfr_tests.o"
+	@echo "... nlhe_cfr_tests.i"
+	@echo "... nlhe_cfr_tests.s"
 	@echo "... ranges_tests.o"
 	@echo "... ranges_tests.i"
 	@echo "... ranges_tests.s"
+	@echo "... tree_tests.o"
+	@echo "... tree_tests.i"
+	@echo "... tree_tests.s"
 	@echo "... util_tests.o"
 	@echo "... util_tests.i"
 	@echo "... util_tests.s"

@@ -22,6 +22,7 @@
 - Types: `CamelCase`; functions/variables: `snake_case`; constants: `kPascalCase`.
 - Prefer `std::unique_ptr`/`std::shared_ptr` over raw owning pointers; pass by const ref where possible.
 - Keep headers minimal; avoid unnecessary includes; use forward declarations in headers.
+- `changelog.md` needs to be updated after every coding session. Document what changes you made and code you added.
 
 ## Testing Guidelines
 - Framework: use standard CTest harness; keep tests small and deterministic (seeded RNG).

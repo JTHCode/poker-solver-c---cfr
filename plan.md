@@ -94,22 +94,52 @@
   - Branch pruning respects 20% threshold (assert).
   - JSONL lines parse and schema fields present.
 
-## Phased Build Order
-1) Project skeleton and build system and CLI scaffold (no logic): set up CMake/toolchain, add top-level targets, create empty folders per structure, stub `main` that parses `--help` and `number_of_situations`, wire basic logging macro, and add initial CI/build script if used.
-2) Utilities: RNG, timer, logging: implement seeded RNG wrapper (std::mt19937_64), scoped timer utility, simple logger with levels; unit tests verifying deterministic seeding and timing wrapper behavior.
-3) Cards/board utilities and board generator: implement card representation, deck shuffling/drawing, collision checks; board generator that draws flop/turn/river from remaining deck; tests for uniqueness and exclusion of known cards.
-4) Ranges loader and validation: implement JSON loader for `/preflop-ranges`, normalization, and sampling API (weighted combo sampling); tests for file parse, normalization sums, and collision-free sampling with provided blockers.
-5) Game state, actions, betting rules; unit tests on legality and stack math: encode positions, streets, pot/stacks/to-call tracking; action validation (fold/call/check/bet/raise/all-in) with allowed bet/raise sizes; pot updates and stack deductions; tests for edge cases (all-in caps, min-raise enforcement, transition check/call symmetry).
-6) Tree structures and info-set keying: define node representation, child linkage, terminal flags, and info-set key builder using state abstraction (street, position, action history, hole-card/board buckets as chosen); tests for deterministic keys and terminal detection.
-7) CFR core on toy game; pass Kuhn test; add hand evaluator stub or mocked values: implement regret matching, strategy accumulation, traversal; run on Kuhn poker to verify convergence toward Nash; mock evaluator returning fixed utilities to keep small game testable.
-8) Integrate NLHE betting model into CFR; fixed bet/raise sizes; terminal handling: plug real action generator from step 5, connect hand evaluator stub, ensure showdown/all-in resolution; add tests on tiny trees (single street) for payoff correctness.
-9) Scenario generator: positions, preflop action line, board sampling: random hero/villain position selection, sample preflop actions (2.5bb open, 10bb 3-bet) respecting stacks, sample hole cards from ranges, build initial game state with history; tests for validity and no collisions.
-10) JSONL writer and schema validation test: implement append-only writer, schema builder for metadata/root strategy/branches/ranges/metrics, unit test that writes multiple lines and parses back cleanly.
-11) Sub-branch solver logic (≥ 20% hero actions) and villain-optimal assumption; integrate with CFR runs: after root solve, identify hero actions ≥ 20% frequency, lock choice, rerun CFR for continuations with villain optimal everywhere; tests to ensure pruning respects threshold and locked action is enforced.
-12) CLI loop: generate N situations, solve, append, show progress; add elapsed time display: wire generator + solver + writer; progress reporting per X spots with timing; handle output path/seed parameters.
-13) Performance tuning: cache allocations, preallocate regret tables, profiling; enable CFR+ if helpful: benchmark iterations/sec, adjust memory layout, optional CFR+ switch; document settings.
-14) Robustness pass: input validation, error messages, config for iterations, seed, output path: add argument validation, graceful handling of missing ranges, safe defaults, and logging for failures.
-15) Final integration tests and sample run producing a few JSONL lines: run end-to-end on small iteration count, validate JSONL schema, and capture sample output artifacts for reference.
+## Phased Build Order (Checklist)
+- [x] 1) Project skeleton and build system and CLI scaffold (no logic): set up CMake/toolchain, add top-level targets, create empty folders per structure, stub `main` that parses `--help` and `number_of_situations`, wire basic logging macro, and add initial CI/build script if used.  
+  - **Dev Notes:** Created CMake scaffold with `poker_solver_cli`, interface include path, and warning flags; CLI stub parses args and logs placeholder messages; logging macro available in `util/logging.h`.
+  
+- [x] 2) Utilities: RNG, timer, logging: implement seeded RNG wrapper (std::mt19937_64), scoped timer utility, simple logger with levels; unit tests verifying deterministic seeding and timing wrapper behavior.  
+  - **Dev Notes:** Added `util/rng.h` (deterministic mt19937_64 wrapper) and `util/timer.h` (steady_clock timer). Unit tests in `tests/util_tests.cpp` cover RNG determinism/range and timer monotonicity; ensure toolchain available before running.
+  
+- [ ] 3) Cards/board utilities and board generator: implement card representation, deck shuffling/drawing, collision checks; board generator that draws flop/turn/river from remaining deck; tests for uniqueness and exclusion of known cards.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 4) Ranges loader and validation: implement JSON loader for `/preflop-ranges`, normalization, and sampling API (weighted combo sampling); tests for file parse, normalization sums, and collision-free sampling with provided blockers.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 5) Game state, actions, betting rules; unit tests on legality and stack math: encode positions, streets, pot/stacks/to-call tracking; action validation (fold/call/check/bet/raise/all-in) with allowed bet/raise sizes; pot updates and stack deductions; tests for edge cases (all-in caps, min-raise enforcement, transition check/call symmetry).  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 6) Tree structures and info-set keying: define node representation, child linkage, terminal flags, and info-set key builder using state abstraction (street, position, action history, hole-card/board buckets as chosen); tests for deterministic keys and terminal detection.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 7) CFR core on toy game; pass Kuhn test; add hand evaluator stub or mocked values: implement regret matching, strategy accumulation, traversal; run on Kuhn poker to verify convergence toward Nash; mock evaluator returning fixed utilities to keep small game testable.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 8) Integrate NLHE betting model into CFR; fixed bet/raise sizes; terminal handling: plug real action generator from step 5, connect hand evaluator stub, ensure showdown/all-in resolution; add tests on tiny trees (single street) for payoff correctness.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 9) Scenario generator: positions, preflop action line, board sampling: random hero/villain position selection, sample preflop actions (2.5bb open, 10bb 3-bet) respecting stacks, sample hole cards from ranges, build initial game state with history; tests for validity and no collisions.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 10) JSONL writer and schema validation test: implement append-only writer, schema builder for metadata/root strategy/branches/ranges/metrics, unit test that writes multiple lines and parses back cleanly.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 11) Sub-branch solver logic (>= 20% hero actions) and villain-optimal assumption; integrate with CFR runs: after root solve, identify hero actions >= 20% frequency, lock choice, rerun CFR for continuations with villain optimal everywhere; tests to ensure pruning respects threshold and locked action is enforced.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 12) CLI loop: generate N situations, solve, append, show progress; add elapsed time display: wire generator + solver + writer; progress reporting per X spots with timing; handle output path/seed parameters.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 13) Performance tuning: cache allocations, preallocate regret tables, profiling; enable CFR+ if helpful: benchmark iterations/sec, adjust memory layout, optional CFR+ switch; document settings.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 14) Robustness pass: input validation, error messages, config for iterations, seed, output path: add argument validation, graceful handling of missing ranges, safe defaults, and logging for failures.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
+- [ ] 15) Final integration tests and sample run producing a few JSONL lines: run end-to-end on small iteration count, validate JSONL schema, and capture sample output artifacts for reference.  
+  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+  
 
 ## Next Steps to Start Coding
 - Set up build system and empty module structure from the folder layout.

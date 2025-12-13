@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/cmake_install.cmake",
+		"C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/src/cmake_install.cmake",
+		"C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/tests/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

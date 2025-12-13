@@ -1,0 +1,18 @@
+Start testing: Dec 13 11:48 Central Standard Time
+----------------------------------------------------------
+1/1 Testing: util_tests
+1/1 Test: util_tests
+Command: "C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/tests/util_tests.exe"
+Directory: C:/Users/17154/Coding Projects/C++ Poker Solver CFR/build/tests
+"util_tests" start time: Dec 13 11:48 Central Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"util_tests" end time: Dec 13 11:48 Central Standard Time
+"util_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Dec 13 11:48 Central Standard Time

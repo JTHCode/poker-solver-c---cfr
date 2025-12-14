@@ -69,6 +69,20 @@ endif()
 
 add_test(NAME tree_tests COMMAND tree_tests)
 
+add_executable(tree_builder_tests
+  tree_builder_tests.cpp
+)
+
+target_link_libraries(tree_builder_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(tree_builder_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(tree_builder_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME tree_builder_tests COMMAND tree_builder_tests)
+
 add_executable(cfr_tests
   cfr_tests.cpp
 )
@@ -154,3 +168,17 @@ else()
 endif()
 
 add_test(NAME dedupe_tests COMMAND dedupe_tests)
+
+add_executable(hand_evaluator_tests
+  hand_evaluator_tests.cpp
+)
+
+target_link_libraries(hand_evaluator_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(hand_evaluator_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(hand_evaluator_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME hand_evaluator_tests COMMAND hand_evaluator_tests)

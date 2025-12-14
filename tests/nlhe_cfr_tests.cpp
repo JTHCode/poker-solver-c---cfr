@@ -23,12 +23,15 @@ GameState MakeRiverFacingBetState() {
   state.committed[1] = 1;
   state.pot = 2;
 
-  state.stacks[0] = 2;
+  // Keep player0 stack equal to to_call so no raises are legal at the root (fold/call only).
+  state.stacks[0] = 1;
   state.stacks[1] = 2;
 
   // Player 0 facing a 1-chip bet (to_call=1), last_bet_size=1.
   state.to_call = 1;
   state.last_bet_size = 1;
+  state.street_committed[0] = 0;
+  state.street_committed[1] = 1;
   state.current_player = 0;
   return state;
 }

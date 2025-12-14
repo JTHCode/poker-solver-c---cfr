@@ -234,9 +234,19 @@ int main(int argc, char* argv[]) {
     }
     existing.insert(spot_id);
 
+    const int spot_seq_id = base_id + written + 1;
+
     poker_solver::solver::NlheCfrOptions root_opt;
     root_opt.iterations = options.iterations;
-    root_opt.showdown_winner = 0;  // stubbed until hand evaluator is implemented
+    root_opt.showdown_winner = 0;  // fallback if no holdem context is provided
+    poker_solver::solver::HoldemTerminalContext holdem;
+    holdem.p0_hole = {scenario.hero_cards[0], scenario.hero_cards[1]};
+    holdem.p1_hole = {scenario.villain_cards[0], scenario.villain_cards[1]};
+    holdem.board = scenario.board;
+    holdem.board_count = 5;
+    holdem.board_samples = 0;
+    holdem.runout_seed = seed ^ static_cast<std::uint64_t>(spot_seq_id);
+    root_opt.holdem = holdem;
 
     const auto root_strategy = poker_solver::solver::SolveRootStrategy(scenario.root_state, root_opt);
 
@@ -246,7 +256,7 @@ int main(int argc, char* argv[]) {
         scenario.root_state, root_strategy, options.branch_threshold, branch_opt);
 
     poker_solver::io::SpotJsonInput out;
-    out.id = base_id + written + 1;
+    out.id = spot_seq_id;
     out.seed = seed;
     out.spot_id = spot_id;
     out.preflop_action_line = scenario.preflop_action_line;
@@ -266,6 +276,24 @@ int main(int argc, char* argv[]) {
     out.solve_time_ms = solve_timer.ElapsedMillis();
     out.skipped_duplicates = skipped_duplicates;
     out.attempts = attempts;
+    out.branch_solves_executed = static_cast<int>(branches.size());
+    out.chance_samples = static_cast<int>(root_strategy.stats.chance_samples);
+
+    std::uint64_t nodes_visited = root_strategy.stats.nodes_visited;
+    std::uint64_t decision_nodes = root_strategy.stats.decision_nodes;
+    std::uint64_t terminal_evals = root_strategy.stats.terminal_evals;
+    std::uint64_t legal_actions_total = root_strategy.stats.legal_actions_total;
+    for (const auto& br : branches) {
+      nodes_visited += br.stats.nodes_visited;
+      decision_nodes += br.stats.decision_nodes;
+      terminal_evals += br.stats.terminal_evals;
+      legal_actions_total += br.stats.legal_actions_total;
+      out.chance_samples += static_cast<int>(br.stats.chance_samples);
+    }
+    out.nodes_visited = nodes_visited;
+    out.decision_nodes = decision_nodes;
+    out.terminal_evals = terminal_evals;
+    out.legal_actions_total = legal_actions_total;
 
     out.root_action_labels.reserve(root_strategy.actions.size());
     out.root_action_probs = root_strategy.probabilities;

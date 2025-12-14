@@ -21,7 +21,7 @@
 - `ranges`: load preflop ranges JSON into dense structures (e.g., 169/1326 combo probs); sampling and normalization.
 - `game_state`: pot, stacks, bets, positions (UTG, HJ, CO, BTN, SB, BB), street, board, action history.
 - `actions`: enums for action types; validates legal actions from state and allowed bet sizes/raises.
-- `betting`: computes pot sizes, legal bet amounts (1/3, 2/3, pot, all-in) and raises (2.5x, 3.5x, all-in), clamps to stack.
+- `betting`: computes pot sizes, legal bet amounts (1/3, 2/3, pot, all-in) and raises (2.5x, 3.5x, 4x, all-in), clamps to stack.
 - `board_gen`: random board generation without collisions with hole cards.
 - `tree`: game tree node structure, children, info-set keys, ownership (hero/villain), terminal detection.
 - `cfr`: core CFR loop (regret matching, strategy accumulation, average strategy); supports chance nodes for board cards; configurable iterations.

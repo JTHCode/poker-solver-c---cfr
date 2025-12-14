@@ -98,13 +98,13 @@ start_ns="$(date +%s%N)"
 end_ns="$(date +%s%N)"
 
 if command -v python3 >/dev/null 2>&1; then
-  python3 - <<'PY' "${OUTPUT_PATH}" "${SITUATIONS}" "${ITERATIONS}" "${BRANCH_THRESHOLD}" "${BUILD_DIR}" "${BUILD_TYPE}" "${SEED}" "${start_ns}" "${end_ns}"
+  python3 - <<'PY' "${OUTPUT_PATH}" "${SITUATIONS}" "${ITERATIONS}" "${BRANCH_THRESHOLD}" "${BUILD_DIR}" "${BUILD_TYPE}" "${SEED}" "${SOLVER}" "${start_ns}" "${end_ns}"
 import json
 import math
 import os
 import sys
 
-path, situations, iterations, threshold, build_dir, build_type, seed, start_ns, end_ns = sys.argv[1:]
+path, situations, iterations, threshold, build_dir, build_type, seed, solver_path, start_ns, end_ns = sys.argv[1:]
 situations = int(situations)
 iterations = int(iterations)
 threshold = float(threshold)
@@ -122,6 +122,11 @@ dupes = 0
 seen = set()
 bad = 0
 missing = 0
+nodes_visited = 0
+decision_nodes = 0
+terminal_evals = 0
+legal_actions_total = 0
+chance_samples = 0
 
 with open(path, "r", encoding="utf-8") as f:
   for line in f:
@@ -146,6 +151,11 @@ with open(path, "r", encoding="utf-8") as f:
     ms = m.get("solve_time_ms")
     if isinstance(ms, (int, float)):
       solve_ms.append(float(ms))
+    nodes_visited += int(m.get("nodes_visited") or 0)
+    decision_nodes += int(m.get("decision_nodes") or 0)
+    terminal_evals += int(m.get("terminal_evals") or 0)
+    legal_actions_total += int(m.get("legal_actions_total") or 0)
+    chance_samples += int(m.get("chance_samples") or 0)
     b = obj.get("solved_branches", [])
     if isinstance(b, list):
       branches.append(len(b))
@@ -163,7 +173,8 @@ def avg(values):
 
 print("**Benchmark**")
 print(f"- build: {build_dir} ({build_type})")
-print(f"- cmd: {' '.join([os.path.basename(sys.argv[0])])} [solver] --number_of_situations {situations} --iterations {iterations} --branch_threshold {threshold} --seed {seed}")
+print(f"- solver: {solver_path}")
+print(f"- args: --number_of_situations {situations} --iterations {iterations} --branch_threshold {threshold} --seed {seed}")
 print(f"- output: {path}")
 print(f"- elapsed_s: {elapsed_s:.3f}")
 print(f"- situations_per_min: {spm:.1f}")
@@ -177,6 +188,14 @@ if branches:
   print(f"- branches_avg: {avg(branches):.3f}")
   print(f"- branches_min: {min(branches)}")
   print(f"- branches_max: {max(branches)}")
+if elapsed_s > 0 and nodes_visited > 0:
+  print(f"- nodes_per_sec: {nodes_visited/elapsed_s:.1f}")
+  print(f"- decision_nodes_per_sec: {decision_nodes/elapsed_s:.1f}")
+else:
+  print(f"- nodes_per_sec: n/a")
+  print(f"- decision_nodes_per_sec: n/a")
+print(f"- avg_legal_actions_per_decision: {(legal_actions_total/decision_nodes):.3f}" if decision_nodes else "- avg_legal_actions_per_decision: n/a")
+print(f"- chance_samples_total: {chance_samples}")
 if bad:
   print(f"- WARNING: malformed_json_lines: {bad}")
 if missing:

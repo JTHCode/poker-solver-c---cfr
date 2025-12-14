@@ -45,22 +45,22 @@ Primary environment: **WSL/Linux (Bash), CMake, C++17**.
 
 Goal: Make performance and quality observable without changing solver behavior meaningfully.
 
-- [ ] Add a standardized benchmark configuration (documented defaults) for:
+- [x] Add a standardized benchmark configuration (documented defaults) for:
   - number of situations
   - iterations
   - branch threshold
   - fixed seed
-- [ ] Extend JSONL `metrics` to include:
+- [x] Extend JSONL `metrics` to include:
   - solve wall time per spot (already present)
   - nodes visited / decisions made per solve (approx is acceptable initially)
   - number of branch solves executed
   - number of chance samples (if sampling is used)
-- [ ] Ensure `scripts/bench.sh` prints:
+- [x] Ensure `scripts/bench.sh` prints:
   - situations/min (already)
   - p50/p90/p99 solve time (already)
   - branches stats (already)
   - optional: nodes/sec when available
-- [ ] Add a “benchmark contract” section to `tests/READ_ME.md`:
+- [x] Add a “benchmark contract” section to `tests/READ_ME.md`:
   - exact commands to reproduce benchmark results
   - recommended Release build usage
 
@@ -78,23 +78,23 @@ Goal: Replace `showdown_winner` stubs with correct hold’em evaluation and corr
 Choose one approach:
 - Implement a fast 7-card evaluator (rank categories + kicker ordering).
 
-- [ ] Add `src/core/hand_rank.h` (or similar) defining:
+- [x] Add `src/core/hand_rank.h` (or similar) defining:
   - `HandRank` value type with total ordering
   - `EvaluateHoldem7(hole[2], board[5]) -> HandRank`
-- [ ] Add unit tests `tests/hand_rank_tests.cpp` covering:
+- [x] Add unit tests `tests/hand_evaluator_tests.cpp` covering:
   - each category (high card .. straight flush)
   - ties and split scenarios
   - known tricky cases (wheel straight, board pairs, etc.)
 
 ### B2: Terminal utility + pot distribution
 
-- [ ] Replace terminal payoff stubs in solver path with:
+- [x] Replace terminal payoff stubs in solver path with:
   - fold payoff (already conceptually present)
   - showdown payoff using evaluator:
     - win: +opponent_committed
     - loss: -self_committed
-    - tie: split pot (define rounding rule for odd chips; for heads-up, decide who gets remainder—document it)
-- [ ] Add tests for terminal resolution correctness:
+    - tie: split pot as double: `(opponent_committed - self_committed) / 2.0` (odd-chip rules not modeled yet)
+- [x] Add tests for terminal resolution correctness:
   - fold → correct chipflow
   - showdown win/loss/tie → correct chipflow
 
@@ -104,9 +104,9 @@ Decide mode(s):
 - Exact: enumerate remaining board runouts (only feasible for small remaining cards; can be used in tests).
 - Sampling: Monte Carlo with explicit `--board_samples`, seeded RNG, and metrics reporting.
 
-- [ ] Implement “runout handling” for terminal all-ins:
+- [x] Implement “runout handling” for terminal all-ins:
   - if all-in and board incomplete: compute expected value via exact or sampling
-- [ ] Add deterministic tests:
+- [x] Add deterministic tests:
   - small exact enumeration test case (fixed blockers, small remaining runout space)
   - sampling reproducibility test (fixed seed gives stable EV within tolerance)
 
@@ -123,7 +123,7 @@ Goal: Define and enforce the betting model used by the solver. The solver can be
 
 ### C1: Define the abstraction (write it down)
 
-- [ ] Decide and document (decision are in `details.md`):
+- [x] Decide and document (decisions are in `details.md`):
   - stack size model (bb, units)
   - streets modeled (flop/turn/river only or include preflop)
   - bet sizes allowed per street (e.g., 33%, 66%, pot, all-in)
@@ -133,13 +133,13 @@ Goal: Define and enforce the betting model used by the solver. The solver can be
 
 ### C2: Action legality engine (authoritative)
 
-- [ ] Implement/upgrade `core/game_state.h` legality rules to match the chosen abstraction:
+- [x] Implement/upgrade `core/game_state.h` legality rules to match the chosen abstraction:
   - min-bet/min-raise
   - raise-to vs raise-by correctness
   - all-in caps and short-stack edge cases
   - street completion rules
   - consistent state transitions (pot/stacks/to_call/last_bet_size)
-- [ ] Unit tests:
+- [x] Unit tests:
   - min-raise enforcement
   - cap at all-in
   - check/call symmetry and street transitions
@@ -157,25 +157,25 @@ Goal: Generate a correct decision tree for the abstraction and ensure info-set k
 
 ### D1: Tree generation
 
-- [ ] Add a tree builder that:
+- [x] Add a tree builder that:
   - expands decision nodes using the legality engine
   - expands chance nodes (deal remaining board cards) based on game state
-  - marks terminal nodes with resolved utility paths
-- [ ] Ensure tree generation is deterministic for fixed seed/config when sampling is used.
+  - marks terminal nodes (fold/showdown) via `state.terminal` / node owner
+- [x] Ensure tree generation is deterministic for fixed seed/config when sampling is used.
 
 ### D2: Info-set keying
 
 Current keys are string-based and minimal. Before performance tuning, ensure correctness:
 
-- [ ] Define what belongs in an info-set key for the abstraction:
+- [x] Define what belongs in an info-set key for the abstraction:
   - street
   - public board cards or board bucket
   - action history abstraction (or exact sequence if small)
   - position / player-to-act
   - any relevant stack/pot buckets if you’re abstracting them
-- [ ] Implement a stable key representation:
+- [x] Implement a stable key representation:
   - initially string is OK; plan to migrate to integer IDs later for speed
-- [ ] Tests:
+- [x] Tests:
   - deterministic keys for identical states
   - distinct keys for distinct observable states
 
@@ -271,4 +271,3 @@ When all gates pass, implementing CFR+ becomes a measurable optimization rather 
 2) Phase C/D (rules + tree + info-sets) makes “the game” well-defined.
 3) Phase E (quality metrics) makes CFR vs CFR+ comparable.
 4) Phase F (performance readiness) prevents misleading speed comparisons.
-

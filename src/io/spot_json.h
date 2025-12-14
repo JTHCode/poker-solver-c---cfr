@@ -45,6 +45,12 @@ struct SpotJsonInput {
   double solve_time_ms{0.0};
   int skipped_duplicates{0};
   int attempts{0};
+  std::uint64_t nodes_visited{0};
+  std::uint64_t decision_nodes{0};
+  std::uint64_t terminal_evals{0};
+  std::uint64_t legal_actions_total{0};
+  int branch_solves_executed{0};
+  int chance_samples{0};
 };
 
 inline std::string BuildSpotJsonLine(const SpotJsonInput& in) {
@@ -128,6 +134,13 @@ inline std::string BuildSpotJsonLine(const SpotJsonInput& in) {
   oss << ",";
   oss << "\"skipped_duplicates\":" << in.skipped_duplicates << ",";
   oss << "\"attempts\":" << in.attempts;
+  oss << ",";
+  oss << "\"nodes_visited\":" << in.nodes_visited << ",";
+  oss << "\"decision_nodes\":" << in.decision_nodes << ",";
+  oss << "\"terminal_evals\":" << in.terminal_evals << ",";
+  oss << "\"legal_actions_total\":" << in.legal_actions_total << ",";
+  oss << "\"branch_solves_executed\":" << in.branch_solves_executed << ",";
+  oss << "\"chance_samples\":" << in.chance_samples;
   oss << "}";
 
   oss << "}";

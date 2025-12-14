@@ -221,6 +221,8 @@ inline Scenario GenerateScenario(util::Rng& rng, const ScenarioConfig& config = 
   // Build an initial postflop game state.
   core::GameState state;
   state.street = core::Street::kFlop;
+  state.board = scenario.board;
+  state.board_count = 3;
   state.pot = 2 * committed_units;
   state.to_call = 0;
   state.stacks[0] = stack_units - committed_units;

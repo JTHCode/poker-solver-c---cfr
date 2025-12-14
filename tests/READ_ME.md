@@ -8,6 +8,10 @@
 
 Runs the solver for a fixed number of situations and prints throughput plus basic JSONL stats (avg/p50/p90/p99 solve time, branches). Uses a temporary JSONL file by default.
 
+**Benchmark contract (recommended defaults):**
+- Use Release for benchmarks (`--build-dir build_rel --build-type Release`).
+- Defaults: `--situations 200 --iterations 2000 --branch-threshold 0.20 --seed 42`.
+
 ```bash
 ./scripts/bench.sh
 ./scripts/bench.sh --situations 1000 --iterations 500

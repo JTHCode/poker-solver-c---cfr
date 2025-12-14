@@ -16,12 +16,14 @@ struct RootStrategyResult {
   std::string info_set_key;
   std::vector<core::Action> actions;
   std::vector<double> probabilities;
+  NlheCfrSolver::Stats stats;
 };
 
 struct BranchSolveResult {
   core::Action hero_root_action;
   double root_probability{0.0};
   std::vector<double> hero_root_avg_strategy_after_lock;
+  NlheCfrSolver::Stats stats;
 };
 
 inline RootStrategyResult SolveRootStrategy(const core::GameState& root_state,
@@ -36,6 +38,7 @@ inline RootStrategyResult SolveRootStrategy(const core::GameState& root_state,
   result.info_set_key = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
   result.actions = solver.ActionsForInfoSet(result.info_set_key);
   result.probabilities = solver.AverageStrategy(result.info_set_key);
+  result.stats = solver.stats();
   if (result.actions.size() != result.probabilities.size()) {
     throw std::logic_error("Root strategy action/probability size mismatch");
   }
@@ -82,10 +85,10 @@ inline std::vector<BranchSolveResult> SolveBranches(const core::GameState& root_
 
     const std::string key = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
     result.hero_root_avg_strategy_after_lock = solver.AverageStrategy(key);
+    result.stats = solver.stats();
     results.push_back(std::move(result));
   }
   return results;
 }
 
 }  // namespace poker_solver::solver
-

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 #include <limits>
 #include <optional>
 #include <stdexcept>
@@ -11,6 +12,7 @@
 
 #include "core/game_state.h"
 #include "core/tree.h"
+#include "solver/terminal_utility.h"
 
 namespace poker_solver::solver {
 
@@ -19,6 +21,7 @@ struct NlheCfrOptions {
   int showdown_winner{0};  // 0 or 1 (used when state.winner is unresolved at showdown)
   bool villain_best_response{false};
   std::optional<core::Action> lock_root_action;  // if set, forces player0's root action
+  std::optional<HoldemTerminalContext> holdem;   // if set, compute real showdown utilities
 };
 
 struct CfrNode {
@@ -29,6 +32,14 @@ struct CfrNode {
 
 class NlheCfrSolver {
  public:
+  struct Stats {
+    std::uint64_t nodes_visited{0};
+    std::uint64_t decision_nodes{0};
+    std::uint64_t terminal_evals{0};
+    std::uint64_t legal_actions_total{0};
+    std::uint64_t chance_samples{0};
+  };
+
   explicit NlheCfrSolver(NlheCfrOptions options) : options_(options) {
     if (options_.iterations <= 0) {
       throw std::invalid_argument("iterations must be positive");
@@ -41,6 +52,8 @@ class NlheCfrSolver {
   void Solve(const core::GameState& root_state) {
     root_state_ = root_state;
     root_key_ = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
+    stats_ = Stats{};
+    runout_cache_.clear();
     for (int i = 0; i < options_.iterations; ++i) {
       (void)Cfr(root_state, 1.0, 1.0);
     }
@@ -74,6 +87,8 @@ class NlheCfrSolver {
     return it->second.actions;
   }
 
+  const Stats& stats() const { return stats_; }
+
  private:
   static std::vector<double> RegretMatching(const std::vector<double>& regret_sum) {
     std::vector<double> strategy(regret_sum.size(), 0.0);
@@ -99,15 +114,27 @@ class NlheCfrSolver {
       throw std::logic_error("TerminalUtility called on non-terminal state");
     }
 
-    const int winner = (state.winner == -1) ? options_.showdown_winner : state.winner;
-    if (winner == 0) {
-      return static_cast<double>(state.committed[1]);
+    if (state.winner != -1) {
+      return FoldUtilityP0(state.winner, state.committed[0], state.committed[1]);
     }
-    return -static_cast<double>(state.committed[0]);
+
+    if (options_.holdem.has_value()) {
+      RunoutStats local;
+      const double ev = ExpectedShowdownUtilityP0(*options_.holdem, state.committed[0], state.committed[1],
+                                                  runout_cache_, local);
+      stats_.chance_samples += local.chance_samples;
+      return ev;
+    }
+
+    // Fallback stub until evaluation context is provided.
+    const int winner = options_.showdown_winner;
+    return FoldUtilityP0(winner, state.committed[0], state.committed[1]);
   }
 
   double Cfr(const core::GameState& state, double p0_reach, double p1_reach) {
+    ++stats_.nodes_visited;
     if (state.terminal) {
+      ++stats_.terminal_evals;
       return TerminalUtility(state);
     }
     if (state.street_complete) {
@@ -115,9 +142,11 @@ class NlheCfrSolver {
       core::GameState terminal_state = state;
       terminal_state.terminal = true;
       terminal_state.winner = -1;
+      ++stats_.terminal_evals;
       return TerminalUtility(terminal_state);
     }
 
+    ++stats_.decision_nodes;
     const int player = state.current_player;
     const auto owner = (player == 0) ? core::NodeOwner::kPlayer0 : core::NodeOwner::kPlayer1;
     const std::string key = core::InfoSetKey(state, owner);
@@ -126,6 +155,7 @@ class NlheCfrSolver {
     if (legal.empty()) {
       throw std::logic_error("Non-terminal state with no legal actions");
     }
+    stats_.legal_actions_total += static_cast<std::uint64_t>(legal.size());
 
     auto& node = nodes_[key];
     if (node.actions.empty()) {
@@ -210,6 +240,8 @@ class NlheCfrSolver {
   std::unordered_map<std::string, CfrNode> nodes_;
   core::GameState root_state_{};
   std::string root_key_;
+  mutable Stats stats_{};
+  mutable std::unordered_map<std::uint64_t, double> runout_cache_{};
 };
 
 }  // namespace poker_solver::solver

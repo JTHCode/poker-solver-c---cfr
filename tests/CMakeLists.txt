@@ -125,3 +125,32 @@ else()
 endif()
 
 add_test(NAME jsonl_writer_tests COMMAND jsonl_writer_tests)
+
+add_executable(subtree_expansion_tests
+  subtree_expansion_tests.cpp
+)
+
+target_link_libraries(subtree_expansion_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(subtree_expansion_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(subtree_expansion_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME subtree_expansion_tests COMMAND subtree_expansion_tests)
+
+add_executable(dedupe_tests
+  dedupe_tests.cpp
+)
+
+target_compile_definitions(dedupe_tests PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+target_link_libraries(dedupe_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(dedupe_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(dedupe_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME dedupe_tests COMMAND dedupe_tests)

@@ -61,4 +61,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "tests/CMakeFiles/nlhe_cfr_tests.dir/DependInfo.cmake"
   "tests/CMakeFiles/scenario_tests.dir/DependInfo.cmake"
   "tests/CMakeFiles/jsonl_writer_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/subtree_expansion_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/dedupe_tests.dir/DependInfo.cmake"
   )

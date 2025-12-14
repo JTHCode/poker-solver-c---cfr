@@ -16,6 +16,9 @@ struct Action {
   int amount;  // amount to commit this action (chips, integer units)
 };
 
+inline bool operator==(const Action& a, const Action& b) { return a.type == b.type && a.amount == b.amount; }
+inline bool operator!=(const Action& a, const Action& b) { return !(a == b); }
+
 struct GameState {
   Street street{Street::kPreflop};
   int pot{0};

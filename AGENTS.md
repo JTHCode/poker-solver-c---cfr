@@ -16,6 +16,7 @@
 - Build all: `cmake --build build -j$(nproc)` (or `cmake --build build` with Ninja handling jobs).
 - Run unit/integration tests: `ctest --test-dir build --output-on-failure`.
 - Sample run (after build): `./build/bin/solver --number_of_situations 10 --output out.jsonl --seed 42`.
+  - JSONL resume/dedupe: the CLI computes `metadata.spot_id` and skips any spots already present in the existing output file.
 
 ## Coding Style & Naming Conventions
 - C++17/20, 2- or 4-space indentation (no tabs); be consistent with nearby code.

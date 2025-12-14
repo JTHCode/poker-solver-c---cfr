@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <limits>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -15,6 +17,8 @@ namespace poker_solver::solver {
 struct NlheCfrOptions {
   int iterations{1000};
   int showdown_winner{0};  // 0 or 1 (used when state.winner is unresolved at showdown)
+  bool villain_best_response{false};
+  std::optional<core::Action> lock_root_action;  // if set, forces player0's root action
 };
 
 struct CfrNode {
@@ -35,6 +39,8 @@ class NlheCfrSolver {
   }
 
   void Solve(const core::GameState& root_state) {
+    root_state_ = root_state;
+    root_key_ = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
     for (int i = 0; i < options_.iterations; ++i) {
       (void)Cfr(root_state, 1.0, 1.0);
     }
@@ -130,29 +136,71 @@ class NlheCfrSolver {
       throw std::logic_error("Action count mismatch for infoset: " + key);
     }
 
-    const auto strategy = RegretMatching(node.regret_sum);
-    const double reach = (player == 0) ? p0_reach : p1_reach;
-    for (std::size_t i = 0; i < node.strategy_sum.size(); ++i) {
-      node.strategy_sum[i] += reach * strategy[i];
+    const bool is_root_lock = options_.lock_root_action.has_value() && player == 0 && key == root_key_;
+    const bool villain_br = options_.villain_best_response && player == 1;
+
+    std::vector<double> strategy;
+    if (is_root_lock) {
+      strategy.assign(legal.size(), 0.0);
+      bool found = false;
+      for (std::size_t i = 0; i < legal.size(); ++i) {
+        if (legal[i] == *options_.lock_root_action) {
+          strategy[i] = 1.0;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        throw std::invalid_argument("lock_root_action is not legal at root");
+      }
+    } else if (!villain_br) {
+      strategy = RegretMatching(node.regret_sum);
     }
 
     std::vector<double> util(legal.size(), 0.0);
     double node_util = 0.0;
     for (std::size_t i = 0; i < legal.size(); ++i) {
+      if (!strategy.empty() && strategy[i] == 0.0) {
+        continue;
+      }
       core::GameState next = state;
       core::ApplyAction(next, legal[i]);
       if (player == 0) {
-        util[i] = Cfr(next, p0_reach * strategy[i], p1_reach);
+        util[i] = Cfr(next, p0_reach * (strategy.empty() ? 1.0 : strategy[i]), p1_reach);
       } else {
-        util[i] = Cfr(next, p0_reach, p1_reach * strategy[i]);
+        util[i] = Cfr(next, p0_reach, p1_reach * (strategy.empty() ? 1.0 : strategy[i]));
       }
-      node_util += strategy[i] * util[i];
+      if (!strategy.empty()) {
+        node_util += strategy[i] * util[i];
+      }
+    }
+
+    if (villain_br) {
+      // Villain minimizes player0 utility.
+      std::size_t best = 0;
+      double best_value = std::numeric_limits<double>::infinity();
+      for (std::size_t i = 0; i < legal.size(); ++i) {
+        if (util[i] < best_value) {
+          best_value = util[i];
+          best = i;
+        }
+      }
+      strategy.assign(legal.size(), 0.0);
+      strategy[best] = 1.0;
+      node_util = util[best];
+    }
+
+    const double reach = (player == 0) ? p0_reach : p1_reach;
+    for (std::size_t i = 0; i < node.strategy_sum.size(); ++i) {
+      node.strategy_sum[i] += reach * strategy[i];
     }
 
     const double opp_reach = (player == 0) ? p1_reach : p0_reach;
-    for (std::size_t i = 0; i < legal.size(); ++i) {
-      const double regret = (player == 0) ? (util[i] - node_util) : (node_util - util[i]);
-      node.regret_sum[i] += opp_reach * regret;
+    if (!villain_br && !is_root_lock) {
+      for (std::size_t i = 0; i < legal.size(); ++i) {
+        const double regret = (player == 0) ? (util[i] - node_util) : (node_util - util[i]);
+        node.regret_sum[i] += opp_reach * regret;
+      }
     }
 
     return node_util;
@@ -160,7 +208,8 @@ class NlheCfrSolver {
 
   NlheCfrOptions options_;
   std::unordered_map<std::string, CfrNode> nodes_;
+  core::GameState root_state_{};
+  std::string root_key_;
 };
 
 }  // namespace poker_solver::solver
-

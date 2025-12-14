@@ -12,6 +12,7 @@ namespace poker_solver::io {
 struct SpotJsonInput {
   int id{0};
   std::uint64_t seed{0};
+  std::string spot_id;
   std::string hero_pos;
   std::string villain_pos;
   std::string preflop_action_line;
@@ -36,6 +37,7 @@ inline std::string BuildSpotJsonLine(const SpotJsonInput& in) {
   oss << "\"metadata\":{";
   oss << "\"id\":" << in.id << ",";
   oss << "\"seed\":" << in.seed << ",";
+  oss << "\"spot_id\":" << Quote(in.spot_id) << ",";
   oss << "\"hero_pos\":" << Quote(in.hero_pos) << ",";
   oss << "\"villain_pos\":" << Quote(in.villain_pos) << ",";
   oss << "\"preflop_action_line\":" << Quote(in.preflop_action_line);
@@ -65,4 +67,3 @@ inline std::string BuildSpotJsonLine(const SpotJsonInput& in) {
 }
 
 }  // namespace poker_solver::io
-

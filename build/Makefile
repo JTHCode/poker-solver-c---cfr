@@ -256,6 +256,32 @@ jsonl_writer_tests/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/build
 .PHONY : jsonl_writer_tests/fast
 
+#=============================================================================
+# Target rules for targets named subtree_expansion_tests
+
+# Build rule for target.
+subtree_expansion_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 subtree_expansion_tests
+.PHONY : subtree_expansion_tests
+
+# fast build rule for target.
+subtree_expansion_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/build
+.PHONY : subtree_expansion_tests/fast
+
+#=============================================================================
+# Target rules for targets named dedupe_tests
+
+# Build rule for target.
+dedupe_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dedupe_tests
+.PHONY : dedupe_tests
+
+# fast build rule for target.
+dedupe_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/build
+.PHONY : dedupe_tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -268,11 +294,13 @@ help:
 	@echo "... actions_tests"
 	@echo "... board_tests"
 	@echo "... cfr_tests"
+	@echo "... dedupe_tests"
 	@echo "... jsonl_writer_tests"
 	@echo "... nlhe_cfr_tests"
 	@echo "... poker_solver_cli"
 	@echo "... ranges_tests"
 	@echo "... scenario_tests"
+	@echo "... subtree_expansion_tests"
 	@echo "... tree_tests"
 	@echo "... util_tests"
 .PHONY : help

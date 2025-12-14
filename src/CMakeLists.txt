@@ -5,6 +5,8 @@ target_compile_features(poker_solver_core INTERFACE cxx_std_17)
 add_executable(poker_solver_cli
   cli/main.cpp
 )
+
+target_compile_definitions(poker_solver_cli PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 target_link_libraries(poker_solver_cli PRIVATE poker_solver_core Threads::Threads)
 
 if(MSVC)

@@ -105,6 +105,8 @@ tests/all: tests/CMakeFiles/cfr_tests.dir/all
 tests/all: tests/CMakeFiles/nlhe_cfr_tests.dir/all
 tests/all: tests/CMakeFiles/scenario_tests.dir/all
 tests/all: tests/CMakeFiles/jsonl_writer_tests.dir/all
+tests/all: tests/CMakeFiles/subtree_expansion_tests.dir/all
+tests/all: tests/CMakeFiles/dedupe_tests.dir/all
 .PHONY : tests/all
 
 # Recursive "preinstall" directory target.
@@ -121,6 +123,8 @@ tests/clean: tests/CMakeFiles/cfr_tests.dir/clean
 tests/clean: tests/CMakeFiles/nlhe_cfr_tests.dir/clean
 tests/clean: tests/CMakeFiles/scenario_tests.dir/clean
 tests/clean: tests/CMakeFiles/jsonl_writer_tests.dir/clean
+tests/clean: tests/CMakeFiles/subtree_expansion_tests.dir/clean
+tests/clean: tests/CMakeFiles/dedupe_tests.dir/clean
 .PHONY : tests/clean
 
 #=============================================================================
@@ -130,7 +134,7 @@ tests/clean: tests/CMakeFiles/jsonl_writer_tests.dir/clean
 src/CMakeFiles/poker_solver_cli.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/poker_solver_cli.dir/build.make src/CMakeFiles/poker_solver_cli.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/poker_solver_cli.dir/build.make src/CMakeFiles/poker_solver_cli.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=11,12 "Built target poker_solver_cli"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=13,14 "Built target poker_solver_cli"
 .PHONY : src/CMakeFiles/poker_solver_cli.dir/all
 
 # Build rule for subdir invocation for target.
@@ -156,7 +160,7 @@ src/CMakeFiles/poker_solver_cli.dir/clean:
 tests/CMakeFiles/util_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/util_tests.dir/build.make tests/CMakeFiles/util_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/util_tests.dir/build.make tests/CMakeFiles/util_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=19,20 "Built target util_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=23,24 "Built target util_tests"
 .PHONY : tests/CMakeFiles/util_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -208,7 +212,7 @@ tests/CMakeFiles/board_tests.dir/clean:
 tests/CMakeFiles/ranges_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=13,14 "Built target ranges_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=15,16 "Built target ranges_tests"
 .PHONY : tests/CMakeFiles/ranges_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -260,7 +264,7 @@ tests/CMakeFiles/actions_tests.dir/clean:
 tests/CMakeFiles/tree_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tree_tests.dir/build.make tests/CMakeFiles/tree_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=17,18 "Built target tree_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=21,22 "Built target tree_tests"
 .PHONY : tests/CMakeFiles/tree_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -312,7 +316,7 @@ tests/CMakeFiles/cfr_tests.dir/clean:
 tests/CMakeFiles/nlhe_cfr_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=9,10 "Built target nlhe_cfr_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=11,12 "Built target nlhe_cfr_tests"
 .PHONY : tests/CMakeFiles/nlhe_cfr_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -338,7 +342,7 @@ tests/CMakeFiles/nlhe_cfr_tests.dir/clean:
 tests/CMakeFiles/scenario_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=15,16 "Built target scenario_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=17,18 "Built target scenario_tests"
 .PHONY : tests/CMakeFiles/scenario_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -364,7 +368,7 @@ tests/CMakeFiles/scenario_tests.dir/clean:
 tests/CMakeFiles/jsonl_writer_tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=7,8 "Built target jsonl_writer_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=9,10 "Built target jsonl_writer_tests"
 .PHONY : tests/CMakeFiles/jsonl_writer_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -382,6 +386,58 @@ jsonl_writer_tests: tests/CMakeFiles/jsonl_writer_tests.dir/rule
 tests/CMakeFiles/jsonl_writer_tests.dir/clean:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/clean
 .PHONY : tests/CMakeFiles/jsonl_writer_tests.dir/clean
+
+#=============================================================================
+# Target rules for target tests/CMakeFiles/subtree_expansion_tests.dir
+
+# All Build rule for target.
+tests/CMakeFiles/subtree_expansion_tests.dir/all:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=19,20 "Built target subtree_expansion_tests"
+.PHONY : tests/CMakeFiles/subtree_expansion_tests.dir/all
+
+# Build rule for subdir invocation for target.
+tests/CMakeFiles/subtree_expansion_tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jthcode/projects/poker_solver_cfr/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/subtree_expansion_tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jthcode/projects/poker_solver_cfr/build/CMakeFiles 0
+.PHONY : tests/CMakeFiles/subtree_expansion_tests.dir/rule
+
+# Convenience name for target.
+subtree_expansion_tests: tests/CMakeFiles/subtree_expansion_tests.dir/rule
+.PHONY : subtree_expansion_tests
+
+# clean rule for target.
+tests/CMakeFiles/subtree_expansion_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/clean
+.PHONY : tests/CMakeFiles/subtree_expansion_tests.dir/clean
+
+#=============================================================================
+# Target rules for target tests/CMakeFiles/dedupe_tests.dir
+
+# All Build rule for target.
+tests/CMakeFiles/dedupe_tests.dir/all:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jthcode/projects/poker_solver_cfr/build/CMakeFiles --progress-num=7,8 "Built target dedupe_tests"
+.PHONY : tests/CMakeFiles/dedupe_tests.dir/all
+
+# Build rule for subdir invocation for target.
+tests/CMakeFiles/dedupe_tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jthcode/projects/poker_solver_cfr/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/dedupe_tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jthcode/projects/poker_solver_cfr/build/CMakeFiles 0
+.PHONY : tests/CMakeFiles/dedupe_tests.dir/rule
+
+# Convenience name for target.
+dedupe_tests: tests/CMakeFiles/dedupe_tests.dir/rule
+.PHONY : dedupe_tests
+
+# clean rule for target.
+tests/CMakeFiles/dedupe_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/clean
+.PHONY : tests/CMakeFiles/dedupe_tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

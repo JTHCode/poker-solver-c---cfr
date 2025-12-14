@@ -252,6 +252,34 @@ jsonl_writer_tests/fast:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/build
 .PHONY : jsonl_writer_tests/fast
 
+# Convenience name for target.
+tests/CMakeFiles/subtree_expansion_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/subtree_expansion_tests.dir/rule
+.PHONY : tests/CMakeFiles/subtree_expansion_tests.dir/rule
+
+# Convenience name for target.
+subtree_expansion_tests: tests/CMakeFiles/subtree_expansion_tests.dir/rule
+.PHONY : subtree_expansion_tests
+
+# fast build rule for target.
+subtree_expansion_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/build
+.PHONY : subtree_expansion_tests/fast
+
+# Convenience name for target.
+tests/CMakeFiles/dedupe_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/dedupe_tests.dir/rule
+.PHONY : tests/CMakeFiles/dedupe_tests.dir/rule
+
+# Convenience name for target.
+dedupe_tests: tests/CMakeFiles/dedupe_tests.dir/rule
+.PHONY : dedupe_tests
+
+# fast build rule for target.
+dedupe_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/build
+.PHONY : dedupe_tests/fast
+
 actions_tests.o: actions_tests.cpp.o
 .PHONY : actions_tests.o
 
@@ -323,6 +351,30 @@ cfr_tests.s: cfr_tests.cpp.s
 cfr_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/cfr_tests.cpp.s
 .PHONY : cfr_tests.cpp.s
+
+dedupe_tests.o: dedupe_tests.cpp.o
+.PHONY : dedupe_tests.o
+
+# target to build an object file
+dedupe_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/dedupe_tests.cpp.o
+.PHONY : dedupe_tests.cpp.o
+
+dedupe_tests.i: dedupe_tests.cpp.i
+.PHONY : dedupe_tests.i
+
+# target to preprocess a source file
+dedupe_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/dedupe_tests.cpp.i
+.PHONY : dedupe_tests.cpp.i
+
+dedupe_tests.s: dedupe_tests.cpp.s
+.PHONY : dedupe_tests.s
+
+# target to generate assembly for a file
+dedupe_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/dedupe_tests.dir/build.make tests/CMakeFiles/dedupe_tests.dir/dedupe_tests.cpp.s
+.PHONY : dedupe_tests.cpp.s
 
 jsonl_writer_tests.o: jsonl_writer_tests.cpp.o
 .PHONY : jsonl_writer_tests.o
@@ -420,6 +472,30 @@ scenario_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/scenario_tests.cpp.s
 .PHONY : scenario_tests.cpp.s
 
+subtree_expansion_tests.o: subtree_expansion_tests.cpp.o
+.PHONY : subtree_expansion_tests.o
+
+# target to build an object file
+subtree_expansion_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/subtree_expansion_tests.cpp.o
+.PHONY : subtree_expansion_tests.cpp.o
+
+subtree_expansion_tests.i: subtree_expansion_tests.cpp.i
+.PHONY : subtree_expansion_tests.i
+
+# target to preprocess a source file
+subtree_expansion_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/subtree_expansion_tests.cpp.i
+.PHONY : subtree_expansion_tests.cpp.i
+
+subtree_expansion_tests.s: subtree_expansion_tests.cpp.s
+.PHONY : subtree_expansion_tests.s
+
+# target to generate assembly for a file
+subtree_expansion_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/subtree_expansion_tests.dir/build.make tests/CMakeFiles/subtree_expansion_tests.dir/subtree_expansion_tests.cpp.s
+.PHONY : subtree_expansion_tests.cpp.s
+
 tree_tests.o: tree_tests.cpp.o
 .PHONY : tree_tests.o
 
@@ -480,10 +556,12 @@ help:
 	@echo "... actions_tests"
 	@echo "... board_tests"
 	@echo "... cfr_tests"
+	@echo "... dedupe_tests"
 	@echo "... jsonl_writer_tests"
 	@echo "... nlhe_cfr_tests"
 	@echo "... ranges_tests"
 	@echo "... scenario_tests"
+	@echo "... subtree_expansion_tests"
 	@echo "... tree_tests"
 	@echo "... util_tests"
 	@echo "... actions_tests.o"
@@ -495,6 +573,9 @@ help:
 	@echo "... cfr_tests.o"
 	@echo "... cfr_tests.i"
 	@echo "... cfr_tests.s"
+	@echo "... dedupe_tests.o"
+	@echo "... dedupe_tests.i"
+	@echo "... dedupe_tests.s"
 	@echo "... jsonl_writer_tests.o"
 	@echo "... jsonl_writer_tests.i"
 	@echo "... jsonl_writer_tests.s"
@@ -507,6 +588,9 @@ help:
 	@echo "... scenario_tests.o"
 	@echo "... scenario_tests.i"
 	@echo "... scenario_tests.s"
+	@echo "... subtree_expansion_tests.o"
+	@echo "... subtree_expansion_tests.i"
+	@echo "... subtree_expansion_tests.s"
 	@echo "... tree_tests.o"
 	@echo "... tree_tests.i"
 	@echo "... tree_tests.s"

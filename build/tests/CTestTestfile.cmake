@@ -18,3 +18,7 @@ add_test(cfr_tests "/home/jthcode/projects/poker_solver_cfr/build/tests/cfr_test
 set_tests_properties(cfr_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;84;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
 add_test(nlhe_cfr_tests "/home/jthcode/projects/poker_solver_cfr/build/tests/nlhe_cfr_tests")
 set_tests_properties(nlhe_cfr_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;98;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(scenario_tests "/home/jthcode/projects/poker_solver_cfr/build/tests/scenario_tests")
+set_tests_properties(scenario_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;113;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(jsonl_writer_tests "/home/jthcode/projects/poker_solver_cfr/build/tests/jsonl_writer_tests")
+set_tests_properties(jsonl_writer_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;127;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")

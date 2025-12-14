@@ -224,6 +224,34 @@ nlhe_cfr_tests/fast:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/build
 .PHONY : nlhe_cfr_tests/fast
 
+# Convenience name for target.
+tests/CMakeFiles/scenario_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/scenario_tests.dir/rule
+.PHONY : tests/CMakeFiles/scenario_tests.dir/rule
+
+# Convenience name for target.
+scenario_tests: tests/CMakeFiles/scenario_tests.dir/rule
+.PHONY : scenario_tests
+
+# fast build rule for target.
+scenario_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/build
+.PHONY : scenario_tests/fast
+
+# Convenience name for target.
+tests/CMakeFiles/jsonl_writer_tests.dir/rule:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/jsonl_writer_tests.dir/rule
+.PHONY : tests/CMakeFiles/jsonl_writer_tests.dir/rule
+
+# Convenience name for target.
+jsonl_writer_tests: tests/CMakeFiles/jsonl_writer_tests.dir/rule
+.PHONY : jsonl_writer_tests
+
+# fast build rule for target.
+jsonl_writer_tests/fast:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/build
+.PHONY : jsonl_writer_tests/fast
+
 actions_tests.o: actions_tests.cpp.o
 .PHONY : actions_tests.o
 
@@ -296,6 +324,30 @@ cfr_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/cfr_tests.dir/build.make tests/CMakeFiles/cfr_tests.dir/cfr_tests.cpp.s
 .PHONY : cfr_tests.cpp.s
 
+jsonl_writer_tests.o: jsonl_writer_tests.cpp.o
+.PHONY : jsonl_writer_tests.o
+
+# target to build an object file
+jsonl_writer_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/jsonl_writer_tests.cpp.o
+.PHONY : jsonl_writer_tests.cpp.o
+
+jsonl_writer_tests.i: jsonl_writer_tests.cpp.i
+.PHONY : jsonl_writer_tests.i
+
+# target to preprocess a source file
+jsonl_writer_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/jsonl_writer_tests.cpp.i
+.PHONY : jsonl_writer_tests.cpp.i
+
+jsonl_writer_tests.s: jsonl_writer_tests.cpp.s
+.PHONY : jsonl_writer_tests.s
+
+# target to generate assembly for a file
+jsonl_writer_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/jsonl_writer_tests.cpp.s
+.PHONY : jsonl_writer_tests.cpp.s
+
 nlhe_cfr_tests.o: nlhe_cfr_tests.cpp.o
 .PHONY : nlhe_cfr_tests.o
 
@@ -343,6 +395,30 @@ ranges_tests.s: ranges_tests.cpp.s
 ranges_tests.cpp.s:
 	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/ranges_tests.dir/build.make tests/CMakeFiles/ranges_tests.dir/ranges_tests.cpp.s
 .PHONY : ranges_tests.cpp.s
+
+scenario_tests.o: scenario_tests.cpp.o
+.PHONY : scenario_tests.o
+
+# target to build an object file
+scenario_tests.cpp.o:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/scenario_tests.cpp.o
+.PHONY : scenario_tests.cpp.o
+
+scenario_tests.i: scenario_tests.cpp.i
+.PHONY : scenario_tests.i
+
+# target to preprocess a source file
+scenario_tests.cpp.i:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/scenario_tests.cpp.i
+.PHONY : scenario_tests.cpp.i
+
+scenario_tests.s: scenario_tests.cpp.s
+.PHONY : scenario_tests.s
+
+# target to generate assembly for a file
+scenario_tests.cpp.s:
+	cd /home/jthcode/projects/poker_solver_cfr/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/scenario_tests.cpp.s
+.PHONY : scenario_tests.cpp.s
 
 tree_tests.o: tree_tests.cpp.o
 .PHONY : tree_tests.o
@@ -404,8 +480,10 @@ help:
 	@echo "... actions_tests"
 	@echo "... board_tests"
 	@echo "... cfr_tests"
+	@echo "... jsonl_writer_tests"
 	@echo "... nlhe_cfr_tests"
 	@echo "... ranges_tests"
+	@echo "... scenario_tests"
 	@echo "... tree_tests"
 	@echo "... util_tests"
 	@echo "... actions_tests.o"
@@ -417,12 +495,18 @@ help:
 	@echo "... cfr_tests.o"
 	@echo "... cfr_tests.i"
 	@echo "... cfr_tests.s"
+	@echo "... jsonl_writer_tests.o"
+	@echo "... jsonl_writer_tests.i"
+	@echo "... jsonl_writer_tests.s"
 	@echo "... nlhe_cfr_tests.o"
 	@echo "... nlhe_cfr_tests.i"
 	@echo "... nlhe_cfr_tests.s"
 	@echo "... ranges_tests.o"
 	@echo "... ranges_tests.i"
 	@echo "... ranges_tests.s"
+	@echo "... scenario_tests.o"
+	@echo "... scenario_tests.i"
+	@echo "... scenario_tests.s"
 	@echo "... tree_tests.o"
 	@echo "... tree_tests.i"
 	@echo "... tree_tests.s"

@@ -230,6 +230,32 @@ nlhe_cfr_tests/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/nlhe_cfr_tests.dir/build.make tests/CMakeFiles/nlhe_cfr_tests.dir/build
 .PHONY : nlhe_cfr_tests/fast
 
+#=============================================================================
+# Target rules for targets named scenario_tests
+
+# Build rule for target.
+scenario_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scenario_tests
+.PHONY : scenario_tests
+
+# fast build rule for target.
+scenario_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/scenario_tests.dir/build.make tests/CMakeFiles/scenario_tests.dir/build
+.PHONY : scenario_tests/fast
+
+#=============================================================================
+# Target rules for targets named jsonl_writer_tests
+
+# Build rule for target.
+jsonl_writer_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 jsonl_writer_tests
+.PHONY : jsonl_writer_tests
+
+# fast build rule for target.
+jsonl_writer_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/jsonl_writer_tests.dir/build.make tests/CMakeFiles/jsonl_writer_tests.dir/build
+.PHONY : jsonl_writer_tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -242,9 +268,11 @@ help:
 	@echo "... actions_tests"
 	@echo "... board_tests"
 	@echo "... cfr_tests"
+	@echo "... jsonl_writer_tests"
 	@echo "... nlhe_cfr_tests"
 	@echo "... poker_solver_cli"
 	@echo "... ranges_tests"
+	@echo "... scenario_tests"
 	@echo "... tree_tests"
 	@echo "... util_tests"
 .PHONY : help

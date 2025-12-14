@@ -1,8 +1,10 @@
-util_tests 19 0.00059303
-board_tests 19 0.00041247
-ranges_tests 15 0.00294406
-actions_tests 13 0.000359108
-tree_tests 8 0.000580334
-cfr_tests 4 0.177208
-nlhe_cfr_tests 2 0.126477
+util_tests 25 0.000484566
+board_tests 25 0.000346238
+ranges_tests 21 0.00216083
+actions_tests 19 0.000215308
+tree_tests 14 0.000234783
+cfr_tests 10 0.0722195
+nlhe_cfr_tests 8 0.0247328
+scenario_tests 5 0.016384
+jsonl_writer_tests 2 0.00230962
 ---

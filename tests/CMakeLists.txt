@@ -96,3 +96,32 @@ else()
 endif()
 
 add_test(NAME nlhe_cfr_tests COMMAND nlhe_cfr_tests)
+
+add_executable(scenario_tests
+  scenario_tests.cpp
+)
+
+target_compile_definitions(scenario_tests PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+target_link_libraries(scenario_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(scenario_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(scenario_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME scenario_tests COMMAND scenario_tests)
+
+add_executable(jsonl_writer_tests
+  jsonl_writer_tests.cpp
+)
+
+target_link_libraries(jsonl_writer_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(jsonl_writer_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(jsonl_writer_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif()
+
+add_test(NAME jsonl_writer_tests COMMAND jsonl_writer_tests)

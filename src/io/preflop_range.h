@@ -52,6 +52,15 @@ inline std::optional<std::string> ParseOptionalStringField(const std::string& co
   return match[2];
 }
 
+inline std::optional<std::string> TryParseOptionalStringField(const std::string& content,
+                                                              std::string_view key) {
+  try {
+    return ParseOptionalStringField(content, key);
+  } catch (const std::invalid_argument&) {
+    return std::nullopt;
+  }
+}
+
 inline std::string ParseStringField(const std::string& content, std::string_view key) {
   auto value = ParseOptionalStringField(content, key);
   if (!value.has_value()) {
@@ -201,10 +210,10 @@ inline PreflopRange LoadPreflopRange(const std::string& path) {
   const auto content = detail::ReadFile(path);
 
   PreflopRange range;
-  range.position = detail::ParseStringField(content, "position");
-  range.villain_position = detail::ParseOptionalStringField(content, "villain_position");
-  range.situation = detail::ParseStringField(content, "situation");
-  range.stack = detail::ParseStringField(content, "stack");
+  range.position = detail::TryParseOptionalStringField(content, "position").value_or("UNKNOWN");
+  range.villain_position = detail::TryParseOptionalStringField(content, "villain_position");
+  range.situation = detail::TryParseOptionalStringField(content, "situation").value_or("UNKNOWN");
+  range.stack = detail::TryParseOptionalStringField(content, "stack").value_or("UNKNOWN");
   range.combos = detail::ParseRangeEntries(content);
   return range;
 }

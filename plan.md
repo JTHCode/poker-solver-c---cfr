@@ -119,11 +119,11 @@
 - [X] 8) Integrate NLHE betting model into CFR; fixed bet/raise sizes; terminal handling: plug real action generator from step 5, connect hand evaluator stub, ensure showdown/all-in resolution; add tests on tiny trees (single street) for payoff correctness.  
   - **Dev Notes:** 12/13/2025: Added `solver/nlhe_cfr.h` integrating CFR traversal with `core::LegalActions`/`ApplyAction` (fixed action sizes) and a stubbed showdown winner; extended `GameState` to track committed chips and street completion for correct fold/showdown payoff math; added `nlhe_cfr_tests` to validate fold-vs-call dominance on a tiny river tree with deterministic showdown outcomes.
   
-- [ ] 9) Scenario generator: positions, preflop action line, board sampling: random hero/villain position selection, sample preflop actions (2.5bb open, 10bb 3-bet) respecting stacks, sample hole cards from ranges, build initial game state with history; tests for validity and no collisions.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 9) Scenario generator: positions, preflop action line, board sampling: random hero/villain position selection, sample preflop actions (2.5bb open, 10bb 3-bet) respecting stacks, sample hole cards from ranges, build initial game state with history; tests for validity and no collisions.  
+  - **Dev Notes:** 12/13/2025: Added `solver/scenario_generator.h` to sample opener/defender positions, preflop line (open-call vs open-3bet-call), hole cards from preflop ranges with collision blockers, and a blocked random board; constructs a deterministic initial flop `GameState` with committed/pot/stacks set and includes a `preflop_action_line` string. Added `scenario_tests` for determinism, pot/stack validity, and collision-free cards/board.
   
-- [ ] 10) JSONL writer and schema validation test: implement append-only writer, schema builder for metadata/root strategy/branches/ranges/metrics, unit test that writes multiple lines and parses back cleanly.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 10) JSONL writer and schema validation test: implement append-only writer, schema builder for metadata/root strategy/branches/ranges/metrics, unit test that writes multiple lines and parses back cleanly.  
+  - **Dev Notes:** 12/13/2025: Added `io/jsonl_writer.h` (append-only, newline-enforced) plus a minimal schema builder `io/spot_json.h` producing a single-line JSON object with `metadata`, `ranges`, `root_strategy`, `solved_branches`, `board`, `metrics`. Added a tiny JSON parser `io/minijson.h` for unit testing and `jsonl_writer_tests` to write two lines then parse/validate required keys.
   
 - [ ] 11) Sub-branch solver logic (>= 20% hero actions) and villain-optimal assumption; integrate with CFR runs: after root solve, identify hero actions >= 20% frequency, lock choice, rerun CFR for continuations with villain optimal everywhere; tests to ensure pruning respects threshold and locked action is enforced.  
   - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._

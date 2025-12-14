@@ -1,0 +1,36 @@
+# CMake generated Testfile for 
+# Source directory: /home/jthcode/projects/poker_solver_cfr/tests
+# Build directory: /home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+add_test(util_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/util_tests")
+set_tests_properties(util_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;13;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(board_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/board_tests")
+set_tests_properties(board_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;27;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(ranges_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/ranges_tests")
+set_tests_properties(ranges_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;42;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(actions_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/actions_tests")
+set_tests_properties(actions_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;56;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(tree_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/tree_tests")
+set_tests_properties(tree_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;70;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(tree_builder_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/tree_builder_tests")
+set_tests_properties(tree_builder_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;84;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(kuhn_metrics_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/kuhn_metrics_tests")
+set_tests_properties(kuhn_metrics_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;98;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(nlhe_metrics_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/nlhe_metrics_tests")
+set_tests_properties(nlhe_metrics_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;112;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(cfr_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/cfr_tests")
+set_tests_properties(cfr_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;138;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(nlhe_cfr_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/nlhe_cfr_tests")
+set_tests_properties(nlhe_cfr_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;152;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(scenario_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/scenario_tests")
+set_tests_properties(scenario_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;167;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(jsonl_writer_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/jsonl_writer_tests")
+set_tests_properties(jsonl_writer_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;181;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(subtree_expansion_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/subtree_expansion_tests")
+set_tests_properties(subtree_expansion_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;195;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(dedupe_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/dedupe_tests")
+set_tests_properties(dedupe_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;210;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")
+add_test(hand_evaluator_tests "/home/jthcode/projects/poker_solver_cfr/build_gate_rel/tests/hand_evaluator_tests")
+set_tests_properties(hand_evaluator_tests PROPERTIES  _BACKTRACE_TRIPLES "/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;224;add_test;/home/jthcode/projects/poker_solver_cfr/tests/CMakeLists.txt;0;")

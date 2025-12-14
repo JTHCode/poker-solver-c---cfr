@@ -67,10 +67,13 @@ inline HandRank Evaluate5(const std::array<Card, 5>& cards) {
   int g = 0;
   for (int r = 14; r >= 2; --r) {
     if (count[static_cast<std::size_t>(r)] > 0) {
-      groups[g++] = {count[static_cast<std::size_t>(r)], r};
+      if (g >= 5) {
+        throw std::logic_error("Too many distinct ranks in 5-card hand");
+      }
+      groups[static_cast<std::size_t>(g++)] = {count[static_cast<std::size_t>(r)], r};
     }
   }
-  std::sort(groups.begin(), groups.begin() + g, [](const auto& a, const auto& b) {
+  std::sort(groups.begin(), groups.end(), [](const auto& a, const auto& b) {
     if (a.first != b.first) {
       return a.first > b.first;
     }
@@ -105,9 +108,11 @@ inline HandRank Evaluate5(const std::array<Card, 5>& cards) {
     const int trips = groups[0].second;
     std::array<int, 2> kick{};
     int kidx = 0;
-    for (int i = 1; i < g; ++i) {
+    for (int i = 1; i < 5; ++i) {
       if (groups[i].first == 1) {
-        kick[kidx++] = groups[i].second;
+        if (kidx < 2) {
+          kick[static_cast<std::size_t>(kidx++)] = groups[i].second;
+        }
       }
     }
     return MakeHandRank(HandCategory::kTrips, {trips, kick[0], kick[1], 0, 0});
@@ -124,9 +129,11 @@ inline HandRank Evaluate5(const std::array<Card, 5>& cards) {
     const int pair = groups[0].second;
     std::array<int, 3> kick{};
     int kidx = 0;
-    for (int i = 1; i < g; ++i) {
+    for (int i = 1; i < 5; ++i) {
       if (groups[i].first == 1) {
-        kick[kidx++] = groups[i].second;
+        if (kidx < 3) {
+          kick[static_cast<std::size_t>(kidx++)] = groups[i].second;
+        }
       }
     }
     return MakeHandRank(HandCategory::kOnePair, {pair, kick[0], kick[1], kick[2], 0});

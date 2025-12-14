@@ -7,7 +7,7 @@ target_link_libraries(util_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(util_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(util_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(util_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME util_tests COMMAND util_tests)
@@ -21,7 +21,7 @@ target_link_libraries(board_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(board_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(board_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(board_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME board_tests COMMAND board_tests)
@@ -36,7 +36,7 @@ target_link_libraries(ranges_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(ranges_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(ranges_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(ranges_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME ranges_tests COMMAND ranges_tests)
@@ -50,7 +50,7 @@ target_link_libraries(actions_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(actions_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(actions_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(actions_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME actions_tests COMMAND actions_tests)
@@ -64,7 +64,7 @@ target_link_libraries(tree_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(tree_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(tree_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(tree_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME tree_tests COMMAND tree_tests)
@@ -78,10 +78,50 @@ target_link_libraries(tree_builder_tests PRIVATE poker_solver_core Threads::Thre
 if(MSVC)
   target_compile_options(tree_builder_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(tree_builder_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(tree_builder_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME tree_builder_tests COMMAND tree_builder_tests)
+
+add_executable(kuhn_metrics_tests
+  kuhn_metrics_tests.cpp
+)
+
+target_link_libraries(kuhn_metrics_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(kuhn_metrics_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(kuhn_metrics_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
+endif()
+
+add_test(NAME kuhn_metrics_tests COMMAND kuhn_metrics_tests)
+
+add_executable(nlhe_metrics_tests
+  nlhe_metrics_tests.cpp
+)
+
+target_link_libraries(nlhe_metrics_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(nlhe_metrics_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(nlhe_metrics_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
+endif()
+
+add_test(NAME nlhe_metrics_tests COMMAND nlhe_metrics_tests)
+
+add_executable(quality_report
+  quality_report.cpp
+)
+
+target_link_libraries(quality_report PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(quality_report PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(quality_report PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
+endif()
 
 add_executable(cfr_tests
   cfr_tests.cpp
@@ -92,7 +132,7 @@ target_link_libraries(cfr_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(cfr_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(cfr_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(cfr_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME cfr_tests COMMAND cfr_tests)
@@ -106,7 +146,7 @@ target_link_libraries(nlhe_cfr_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(nlhe_cfr_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(nlhe_cfr_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(nlhe_cfr_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME nlhe_cfr_tests COMMAND nlhe_cfr_tests)
@@ -121,7 +161,7 @@ target_link_libraries(scenario_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(scenario_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(scenario_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(scenario_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME scenario_tests COMMAND scenario_tests)
@@ -135,7 +175,7 @@ target_link_libraries(jsonl_writer_tests PRIVATE poker_solver_core Threads::Thre
 if(MSVC)
   target_compile_options(jsonl_writer_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(jsonl_writer_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(jsonl_writer_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME jsonl_writer_tests COMMAND jsonl_writer_tests)
@@ -149,7 +189,7 @@ target_link_libraries(subtree_expansion_tests PRIVATE poker_solver_core Threads:
 if(MSVC)
   target_compile_options(subtree_expansion_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(subtree_expansion_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(subtree_expansion_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME subtree_expansion_tests COMMAND subtree_expansion_tests)
@@ -164,7 +204,7 @@ target_link_libraries(dedupe_tests PRIVATE poker_solver_core Threads::Threads)
 if(MSVC)
   target_compile_options(dedupe_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(dedupe_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(dedupe_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME dedupe_tests COMMAND dedupe_tests)
@@ -178,7 +218,7 @@ target_link_libraries(hand_evaluator_tests PRIVATE poker_solver_core Threads::Th
 if(MSVC)
   target_compile_options(hand_evaluator_tests PRIVATE /W4 /permissive- /WX-)
 else()
-  target_compile_options(hand_evaluator_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+  target_compile_options(hand_evaluator_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
 endif()
 
 add_test(NAME hand_evaluator_tests COMMAND hand_evaluator_tests)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <limits>
 #include <optional>
@@ -22,6 +23,7 @@ struct NlheCfrOptions {
   bool villain_best_response{false};
   std::optional<core::Action> lock_root_action;  // if set, forces player0's root action
   std::optional<HoldemTerminalContext> holdem;   // if set, compute real showdown utilities
+  int node_reserve{0};                           // if >0, reserve node table capacity
 };
 
 struct CfrNode {
@@ -32,6 +34,61 @@ struct CfrNode {
 
 class NlheCfrSolver {
  public:
+  struct InfoKey {
+    std::uint8_t owner{0};  // 0=P0, 1=P1
+    std::uint8_t street{0};
+    std::uint8_t board_count{0};
+    std::uint8_t current_player{0};
+    std::uint8_t consecutive_checks{0};
+    std::uint8_t reopen_allowed{0};
+    std::uint8_t terminal{0};
+    std::uint8_t street_complete{0};
+    int pot{0};
+    int to_call{0};
+    int last_bet_size{0};
+    int street_committed0{0};
+    int street_committed1{0};
+    int raises_this_street{0};
+    std::array<std::uint8_t, 5> board_ids{{255, 255, 255, 255, 255}};
+
+    bool operator==(const InfoKey& other) const {
+      return owner == other.owner && street == other.street && board_count == other.board_count &&
+             current_player == other.current_player && consecutive_checks == other.consecutive_checks &&
+             reopen_allowed == other.reopen_allowed && terminal == other.terminal &&
+             street_complete == other.street_complete && pot == other.pot && to_call == other.to_call &&
+             last_bet_size == other.last_bet_size && street_committed0 == other.street_committed0 &&
+             street_committed1 == other.street_committed1 && raises_this_street == other.raises_this_street &&
+             board_ids == other.board_ids;
+    }
+  };
+
+  struct InfoKeyHasher {
+    std::size_t operator()(const InfoKey& k) const noexcept {
+      std::size_t h = 0;
+      const auto mix = [&](std::size_t v) {
+        h ^= v + 0x9e3779b97f4a7c15ull + (h << 6) + (h >> 2);
+      };
+      mix(static_cast<std::size_t>(k.owner));
+      mix(static_cast<std::size_t>(k.street));
+      mix(static_cast<std::size_t>(k.board_count));
+      mix(static_cast<std::size_t>(k.current_player));
+      mix(static_cast<std::size_t>(k.consecutive_checks));
+      mix(static_cast<std::size_t>(k.reopen_allowed));
+      mix(static_cast<std::size_t>(k.terminal));
+      mix(static_cast<std::size_t>(k.street_complete));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.pot)));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.to_call)));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.last_bet_size)));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.street_committed0)));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.street_committed1)));
+      mix(static_cast<std::size_t>(static_cast<std::uint32_t>(k.raises_this_street)));
+      for (const auto id : k.board_ids) {
+        mix(static_cast<std::size_t>(id));
+      }
+      return h;
+    }
+  };
+
   struct Stats {
     std::uint64_t nodes_visited{0};
     std::uint64_t decision_nodes{0};
@@ -51,16 +108,20 @@ class NlheCfrSolver {
 
   void Solve(const core::GameState& root_state) {
     root_state_ = root_state;
-    root_key_ = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
+    root_key_ = MakeKey(root_state, core::NodeOwner::kPlayer0);
     stats_ = Stats{};
     runout_cache_.clear();
+    nodes_.clear();
+    if (options_.node_reserve > 0) {
+      nodes_.reserve(static_cast<std::size_t>(options_.node_reserve));
+    }
     for (int i = 0; i < options_.iterations; ++i) {
       (void)Cfr(root_state, 1.0, 1.0);
     }
   }
 
-  std::vector<double> AverageStrategy(const std::string& info_set_key) const {
-    const auto it = nodes_.find(info_set_key);
+  std::vector<double> AverageStrategy(const core::GameState& state, core::NodeOwner owner) const {
+    const auto it = nodes_.find(MakeKey(state, owner));
     if (it == nodes_.end() || it->second.strategy_sum.empty()) {
       return {};
     }
@@ -79,8 +140,8 @@ class NlheCfrSolver {
     return avg;
   }
 
-  std::vector<core::Action> ActionsForInfoSet(const std::string& info_set_key) const {
-    const auto it = nodes_.find(info_set_key);
+  std::vector<core::Action> ActionsForInfoSet(const core::GameState& state, core::NodeOwner owner) const {
+    const auto it = nodes_.find(MakeKey(state, owner));
     if (it == nodes_.end()) {
       return {};
     }
@@ -149,22 +210,20 @@ class NlheCfrSolver {
     ++stats_.decision_nodes;
     const int player = state.current_player;
     const auto owner = (player == 0) ? core::NodeOwner::kPlayer0 : core::NodeOwner::kPlayer1;
-    const std::string key = core::InfoSetKey(state, owner);
-
-    const auto legal = core::LegalActions(state).actions;
-    if (legal.empty()) {
-      throw std::logic_error("Non-terminal state with no legal actions");
+    const InfoKey key = MakeKey(state, owner);
+    auto [it, inserted] = nodes_.try_emplace(key);
+    auto& node = it->second;
+    if (inserted) {
+      node.actions = core::LegalActions(state).actions;
+      if (node.actions.empty()) {
+        throw std::logic_error("Non-terminal state with no legal actions");
+      }
+      node.regret_sum.assign(node.actions.size(), 0.0);
+      node.strategy_sum.assign(node.actions.size(), 0.0);
     }
+
+    const auto& legal = node.actions;
     stats_.legal_actions_total += static_cast<std::uint64_t>(legal.size());
-
-    auto& node = nodes_[key];
-    if (node.actions.empty()) {
-      node.actions = legal;
-      node.regret_sum.assign(legal.size(), 0.0);
-      node.strategy_sum.assign(legal.size(), 0.0);
-    } else if (node.actions.size() != legal.size()) {
-      throw std::logic_error("Action count mismatch for infoset: " + key);
-    }
 
     const bool is_root_lock = options_.lock_root_action.has_value() && player == 0 && key == root_key_;
     const bool villain_br = options_.villain_best_response && player == 1;
@@ -190,9 +249,6 @@ class NlheCfrSolver {
     std::vector<double> util(legal.size(), 0.0);
     double node_util = 0.0;
     for (std::size_t i = 0; i < legal.size(); ++i) {
-      if (!strategy.empty() && strategy[i] == 0.0) {
-        continue;
-      }
       core::GameState next = state;
       core::ApplyAction(next, legal[i]);
       if (player == 0) {
@@ -236,10 +292,35 @@ class NlheCfrSolver {
     return node_util;
   }
 
+  static InfoKey MakeKey(const core::GameState& state, core::NodeOwner owner) {
+    InfoKey k;
+    k.owner = static_cast<std::uint8_t>(owner == core::NodeOwner::kPlayer1 ? 1 : 0);
+    k.street = static_cast<std::uint8_t>(state.street);
+    k.board_count = static_cast<std::uint8_t>(state.board_count);
+    k.current_player = static_cast<std::uint8_t>(state.current_player);
+    k.consecutive_checks = static_cast<std::uint8_t>(state.consecutive_checks);
+    k.reopen_allowed = static_cast<std::uint8_t>(state.reopen_allowed ? 1 : 0);
+    k.terminal = static_cast<std::uint8_t>(state.terminal ? 1 : 0);
+    k.street_complete = static_cast<std::uint8_t>(state.street_complete ? 1 : 0);
+    k.pot = state.pot;
+    k.to_call = state.to_call;
+    k.last_bet_size = state.last_bet_size;
+    k.street_committed0 = state.street_committed[0];
+    k.street_committed1 = state.street_committed[1];
+    k.raises_this_street = state.raises_this_street;
+
+    if (state.board_count >= 1) k.board_ids[0] = core::ToId(state.board.flop[0]);
+    if (state.board_count >= 2) k.board_ids[1] = core::ToId(state.board.flop[1]);
+    if (state.board_count >= 3) k.board_ids[2] = core::ToId(state.board.flop[2]);
+    if (state.board_count >= 4) k.board_ids[3] = core::ToId(state.board.turn);
+    if (state.board_count >= 5) k.board_ids[4] = core::ToId(state.board.river);
+    return k;
+  }
+
   NlheCfrOptions options_;
-  std::unordered_map<std::string, CfrNode> nodes_;
+  std::unordered_map<InfoKey, CfrNode, InfoKeyHasher> nodes_;
   core::GameState root_state_{};
-  std::string root_key_;
+  InfoKey root_key_{};
   mutable Stats stats_{};
   mutable std::unordered_map<std::uint64_t, double> runout_cache_{};
 };

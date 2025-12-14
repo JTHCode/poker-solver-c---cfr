@@ -18,7 +18,20 @@ Runs the solver for a fixed number of situations and prints throughput plus basi
 ./scripts/bench.sh --build-dir build_rel --build-type Release --situations 200 --iterations 2000
 ./scripts/bench.sh --keep-output                      # keeps the temp JSONL and prints its path
 ./scripts/bench.sh --output /tmp/run.jsonl --keep-output
+./scripts/bench.sh --no-quality                      # omit the quality_report run
 ```
+
+**Quality metrics (exploitability):**
+
+Build and run:
+
+```bash
+cmake --build build -j$(nproc)
+./build/tests/quality_report --kuhn_iterations 20000 --nlhe_iterations 400 --seed 12345
+```
+
+Notes:
+- Prints Kuhn exploitability and a small river-only NLHE exploitability estimate (both as `0.5 * (BR0 - BR1)`).
 
 **Windows (legacy):**
 

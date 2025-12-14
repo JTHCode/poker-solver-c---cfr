@@ -36,8 +36,8 @@ inline RootStrategyResult SolveRootStrategy(const core::GameState& root_state,
 
   RootStrategyResult result;
   result.info_set_key = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
-  result.actions = solver.ActionsForInfoSet(result.info_set_key);
-  result.probabilities = solver.AverageStrategy(result.info_set_key);
+  result.actions = solver.ActionsForInfoSet(root_state, core::NodeOwner::kPlayer0);
+  result.probabilities = solver.AverageStrategy(root_state, core::NodeOwner::kPlayer0);
   result.stats = solver.stats();
   if (result.actions.size() != result.probabilities.size()) {
     throw std::logic_error("Root strategy action/probability size mismatch");
@@ -83,8 +83,7 @@ inline std::vector<BranchSolveResult> SolveBranches(const core::GameState& root_
     NlheCfrSolver solver(opt);
     solver.Solve(root_state);
 
-    const std::string key = core::InfoSetKey(root_state, core::NodeOwner::kPlayer0);
-    result.hero_root_avg_strategy_after_lock = solver.AverageStrategy(key);
+    result.hero_root_avg_strategy_after_lock = solver.AverageStrategy(root_state, core::NodeOwner::kPlayer0);
     result.stats = solver.stats();
     results.push_back(std::move(result));
   }

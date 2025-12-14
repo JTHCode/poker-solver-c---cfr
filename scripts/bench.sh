@@ -10,6 +10,7 @@ SEED=42
 KEEP_OUTPUT=0
 NO_BUILD=0
 OUTPUT_PATH=""
+QUALITY=1
 
 usage() {
   cat <<EOF
@@ -27,6 +28,8 @@ Options:
   --output <path>           JSONL output path (default: temp file)
   --keep-output             Keep the output JSONL file (default: off)
   --no-build                Skip CMake configure/build (default: off)
+  --quality                 Print quality metrics via build/tests/quality_report (default: on)
+  --no-quality              Disable quality metric output
   -h, --help                Show help
 
 Examples:
@@ -47,6 +50,8 @@ while [[ $# -gt 0 ]]; do
     --output) OUTPUT_PATH="${2:?}"; shift 2 ;;
     --keep-output) KEEP_OUTPUT=1; shift ;;
     --no-build) NO_BUILD=1; shift ;;
+    --quality) QUALITY=1; shift ;;
+    --no-quality) QUALITY=0; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown arg: $1" >&2; usage; exit 2 ;;
   esac
@@ -209,6 +214,18 @@ else
   echo "- build: ${BUILD_DIR} (${BUILD_TYPE})"
   echo "- elapsed_s: (python3 required for float math)"
   echo "- lines_written: (python3 required for JSONL stats)"
+fi
+
+if [[ "${QUALITY}" -eq 1 ]]; then
+  QR="${BUILD_DIR}/tests/quality_report"
+  if [[ -x "${QR}" ]]; then
+    echo
+    echo "**Quality (Exploitability)**"
+    "${QR}" --kuhn_iterations 20000 --nlhe_iterations "${ITERATIONS}" --seed "${SEED}" || true
+  else
+    echo
+    echo "NOTE: quality_report not found at: ${QR} (build may not include tests)"
+  fi
 fi
 
 if [[ "${KEEP_OUTPUT}" -eq 1 ]]; then

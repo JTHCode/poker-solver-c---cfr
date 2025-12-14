@@ -246,6 +246,7 @@ int main(int argc, char* argv[]) {
     holdem.board_count = 5;
     holdem.board_samples = 0;
     holdem.runout_seed = seed ^ static_cast<std::uint64_t>(spot_seq_id);
+    poker_solver::solver::PrepareHoldemContext(holdem);
     root_opt.holdem = holdem;
 
     const auto root_strategy = poker_solver::solver::SolveRootStrategy(scenario.root_state, root_opt);

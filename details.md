@@ -22,3 +22,13 @@ Current info-set key uses only **public** information and is intended for this p
 Notes:
 - Action-history is not stored explicitly yet; the current key is a function of the public betting totals/state instead.
 - Private hole cards and bucketing are not represented yet (future work in later phases).
+
+## Phase E Metrics (Current)
+
+Exploitability is reported as:
+- `v(σ0,σ1)`: expected value for player0 under the current average strategy profile
+- `BR0(σ1)`: best-response value for player0 against player1 strategy
+- `BR1(σ0)`: best-response value for player1 against player0 strategy (minimizes player0 EV)
+- `exploitability := 0.5 * (BR0(σ1) - BR1(σ0))`
+
+This value is always `>= 0` in a zero-sum game and should trend down with more CFR iterations (for a fixed game definition/abstraction).

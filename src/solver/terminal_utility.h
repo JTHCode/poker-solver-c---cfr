@@ -24,6 +24,7 @@ struct HoldemTerminalContext {
   int board_count{5};           // number of known board cards in order flop(3),turn,river
   int board_samples{0};         // if >0, sample runouts when board_count < 5
   std::uint64_t runout_seed{0}; // seed used for sampling runouts
+  int full_board_result{-2};    // when board_count==5: -2 unknown, -1 tie, 0 p0 wins, 1 p1 wins
 };
 
 struct RunoutStats {
@@ -53,6 +54,34 @@ inline double ShowdownUtilityP0(const std::array<core::Card, 2>& p0_hole,
   }
   // Split pot: net utility for player0 is half-pot minus own committed.
   return (static_cast<double>(committed1) - static_cast<double>(committed0)) / 2.0;
+}
+
+inline double ShowdownUtilityP0FromResult(int result, int committed0, int committed1) {
+  if (result == 0 || result == 1) {
+    return FoldUtilityP0(result, committed0, committed1);
+  }
+  if (result == -1) {
+    return (static_cast<double>(committed1) - static_cast<double>(committed0)) / 2.0;
+  }
+  throw std::invalid_argument("Invalid full_board_result");
+}
+
+inline void PrepareHoldemContext(HoldemTerminalContext& ctx) {
+  if (ctx.board_count != 5) {
+    return;
+  }
+  if (ctx.full_board_result != -2) {
+    return;
+  }
+  const auto r0 = core::EvaluateHoldem7(ctx.p0_hole, ctx.board);
+  const auto r1 = core::EvaluateHoldem7(ctx.p1_hole, ctx.board);
+  if (r0 > r1) {
+    ctx.full_board_result = 0;
+  } else if (r1 > r0) {
+    ctx.full_board_result = 1;
+  } else {
+    ctx.full_board_result = -1;
+  }
 }
 
 inline std::vector<core::Card> KnownBoardCards(const core::Board& board, int board_count) {
@@ -129,6 +158,9 @@ inline double ExpectedShowdownUtilityP0(const HoldemTerminalContext& ctx, int co
                                        std::unordered_map<std::uint64_t, double>& cache,
                                        RunoutStats& stats) {
   if (ctx.board_count == 5) {
+    if (ctx.full_board_result != -2) {
+      return ShowdownUtilityP0FromResult(ctx.full_board_result, committed0, committed1);
+    }
     stats.chance_samples += 1;
     return ShowdownUtilityP0(ctx.p0_hole, ctx.p1_hole, ctx.board, committed0, committed1);
   }

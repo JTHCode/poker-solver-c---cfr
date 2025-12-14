@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <vector>
 
 #include "core/game_state.h"
@@ -13,6 +14,17 @@ using poker_solver::core::GameState;
 using poker_solver::core::NodeOwner;
 using poker_solver::solver::NlheCfrOptions;
 using poker_solver::solver::NlheCfrSolver;
+
+void AssertValidDistribution(const std::vector<double>& probs) {
+  assert(!probs.empty());
+  double sum = 0.0;
+  for (const double prob : probs) {
+    assert(prob >= -1e-12);
+    assert(prob <= 1.0 + 1e-12);
+    sum += prob;
+  }
+  assert(std::abs(sum - 1.0) < 1e-6);
+}
 
 GameState MakeRiverFacingBetState() {
   GameState state{};
@@ -44,12 +56,12 @@ void TestFoldDominatesWhenLosingShowdown() {
   NlheCfrSolver solver(options);
   solver.Solve(root);
 
-  const std::string key = poker_solver::core::InfoSetKey(root, NodeOwner::kPlayer0);
-  const auto actions = solver.ActionsForInfoSet(key);
-  const auto avg = solver.AverageStrategy(key);
+  const auto actions = solver.ActionsForInfoSet(root, NodeOwner::kPlayer0);
+  const auto avg = solver.AverageStrategy(root, NodeOwner::kPlayer0);
 
   assert(actions.size() == avg.size());
   assert(!actions.empty());
+  AssertValidDistribution(avg);
   assert(actions[0].type == ActionType::kFold);
   assert(actions[1].type == ActionType::kCall);
 
@@ -65,11 +77,11 @@ void TestCallDominatesWhenWinningShowdown() {
   NlheCfrSolver solver(options);
   solver.Solve(root);
 
-  const std::string key = poker_solver::core::InfoSetKey(root, NodeOwner::kPlayer0);
-  const auto actions = solver.ActionsForInfoSet(key);
-  const auto avg = solver.AverageStrategy(key);
+  const auto actions = solver.ActionsForInfoSet(root, NodeOwner::kPlayer0);
+  const auto avg = solver.AverageStrategy(root, NodeOwner::kPlayer0);
 
   assert(actions.size() == avg.size());
+  AssertValidDistribution(avg);
   assert(actions[0].type == ActionType::kFold);
   assert(actions[1].type == ActionType::kCall);
 

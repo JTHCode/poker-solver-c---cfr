@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <csignal>
 #include <iostream>
 #include <optional>
 #include <stdexcept>
@@ -11,16 +12,24 @@
 #include "io/spot_json.h"
 #include "solver/scenario_generator.h"
 #include "solver/spot_id.h"
+#include "solver/subtree_expansion.h"
 #include "util/logging.h"
 #include "util/rng.h"
 #include "util/timer.h"
 
 namespace {
 
+volatile std::sig_atomic_t g_stop_requested = 0;
+
+void HandleSignal(int /*signal*/) { g_stop_requested = 1; }
+
 struct CliOptions {
   std::optional<int> number_of_situations;
   std::string output = "out.jsonl";
   std::optional<std::uint64_t> seed;
+  int iterations = 2000;
+  double branch_threshold = 0.20;
+  int progress_every = 10;
   bool show_help = false;
   bool valid = true;
   std::string error_message;
@@ -28,12 +37,16 @@ struct CliOptions {
 
 void PrintHelp(std::string_view program_name) {
   std::cout << "Usage: " << program_name
-            << " --number_of_situations <n> [--output <path>] [--seed <seed>] [--help]\n"
+            << " --number_of_situations <n> [--output <path>] [--seed <seed>] [--iterations <n>]\n"
+            << "       [--branch_threshold <t>] [--progress_every <n>] [--help]\n"
             << "\n"
             << "Options:\n"
             << "  -n, --number_of_situations <n>  Number of random situations to solve (required).\n"
             << "  -o, --output <path>             Output JSONL path (default: out.jsonl).\n"
             << "  -s, --seed <seed>               RNG seed (recommended for reproducibility).\n"
+            << "      --iterations <n>            CFR iterations per solve (default: 2000).\n"
+            << "      --branch_threshold <t>      Root action threshold (default: 0.20).\n"
+            << "      --progress_every <n>        Log progress every n written spots (default: 10).\n"
             << "  -h, --help                      Show this help message.\n";
 }
 
@@ -65,6 +78,66 @@ CliOptions ParseArgs(int argc, char* argv[]) {
       } catch (const std::exception&) {
         options.valid = false;
         options.error_message = "Invalid integer for seed.";
+        return options;
+      }
+      continue;
+    }
+    if (arg == "--iterations") {
+      if (i + 1 >= argc) {
+        options.valid = false;
+        options.error_message = "Missing value for iterations.";
+        return options;
+      }
+      try {
+        options.iterations = std::stoi(argv[++i]);
+        if (options.iterations <= 0) {
+          options.valid = false;
+          options.error_message = "iterations must be positive.";
+          return options;
+        }
+      } catch (const std::exception&) {
+        options.valid = false;
+        options.error_message = "Invalid integer for iterations.";
+        return options;
+      }
+      continue;
+    }
+    if (arg == "--branch_threshold") {
+      if (i + 1 >= argc) {
+        options.valid = false;
+        options.error_message = "Missing value for branch_threshold.";
+        return options;
+      }
+      try {
+        options.branch_threshold = std::stod(argv[++i]);
+        if (options.branch_threshold < 0.0 || options.branch_threshold > 1.0) {
+          options.valid = false;
+          options.error_message = "branch_threshold must be in [0,1].";
+          return options;
+        }
+      } catch (const std::exception&) {
+        options.valid = false;
+        options.error_message = "Invalid number for branch_threshold.";
+        return options;
+      }
+      continue;
+    }
+    if (arg == "--progress_every") {
+      if (i + 1 >= argc) {
+        options.valid = false;
+        options.error_message = "Missing value for progress_every.";
+        return options;
+      }
+      try {
+        options.progress_every = std::stoi(argv[++i]);
+        if (options.progress_every <= 0) {
+          options.valid = false;
+          options.error_message = "progress_every must be positive.";
+          return options;
+        }
+      } catch (const std::exception&) {
+        options.valid = false;
+        options.error_message = "Invalid integer for progress_every.";
         return options;
       }
       continue;
@@ -106,6 +179,9 @@ CliOptions ParseArgs(int argc, char* argv[]) {
 }  // namespace
 
 int main(int argc, char* argv[]) {
+  std::signal(SIGINT, HandleSignal);
+  std::signal(SIGTERM, HandleSignal);
+
   const auto options = ParseArgs(argc, argv);
 
   if (!options.valid) {
@@ -121,7 +197,7 @@ int main(int argc, char* argv[]) {
 
   const std::uint64_t seed = options.seed.value_or(42);
   poker_solver::util::Rng rng(seed);
-  poker_solver::util::Timer timer;
+  poker_solver::util::Timer overall_timer;
 
   poker_solver::solver::ScenarioConfig scenario_config;
   scenario_config.project_root = PROJECT_SOURCE_DIR;
@@ -135,23 +211,42 @@ int main(int argc, char* argv[]) {
   const int target = *options.number_of_situations;
   int written = 0;
   int attempts = 0;
+  int skipped_duplicates = 0;
   const int max_attempts = target * 50;
+  const int base_id = static_cast<int>(existing.size());
 
   while (written < target) {
+    if (g_stop_requested != 0) {
+      LOG_WARN("Stop requested; exiting after writing completed spots.");
+      break;
+    }
     if (attempts++ >= max_attempts) {
       LOG_ERROR("Exceeded max attempts while deduping; stopping early.");
       break;
     }
 
+    poker_solver::util::Timer solve_timer;
     auto scenario = poker_solver::solver::GenerateScenario(rng, scenario_config);
     const std::string spot_id = poker_solver::solver::SpotIdString(scenario);
     if (existing.find(spot_id) != existing.end()) {
+      ++skipped_duplicates;
       continue;
     }
     existing.insert(spot_id);
 
+    poker_solver::solver::NlheCfrOptions root_opt;
+    root_opt.iterations = options.iterations;
+    root_opt.showdown_winner = 0;  // stubbed until hand evaluator is implemented
+
+    const auto root_strategy = poker_solver::solver::SolveRootStrategy(scenario.root_state, root_opt);
+
+    poker_solver::solver::NlheCfrOptions branch_opt = root_opt;
+    branch_opt.iterations = options.iterations;
+    const auto branches = poker_solver::solver::SolveBranches(
+        scenario.root_state, root_strategy, options.branch_threshold, branch_opt);
+
     poker_solver::io::SpotJsonInput out;
-    out.id = written + 1;
+    out.id = base_id + written + 1;
     out.seed = seed;
     out.spot_id = spot_id;
     out.preflop_action_line = scenario.preflop_action_line;
@@ -168,10 +263,49 @@ int main(int argc, char* argv[]) {
     out.flop2 = poker_solver::core::ToString(scenario.board.flop[2]);
     out.turn = poker_solver::core::ToString(scenario.board.turn);
     out.river = poker_solver::core::ToString(scenario.board.river);
-    out.solve_time_ms = timer.ElapsedMillis();
+    out.solve_time_ms = solve_timer.ElapsedMillis();
+    out.skipped_duplicates = skipped_duplicates;
+    out.attempts = attempts;
+
+    out.root_action_labels.reserve(root_strategy.actions.size());
+    out.root_action_probs = root_strategy.probabilities;
+    for (const auto& a : root_strategy.actions) {
+      out.root_action_labels.push_back(poker_solver::io::ActionLabel(
+          a.type == poker_solver::core::ActionType::kFold   ? "FOLD"
+          : a.type == poker_solver::core::ActionType::kCheck ? "CHECK"
+          : a.type == poker_solver::core::ActionType::kCall  ? "CALL"
+          : a.type == poker_solver::core::ActionType::kBet   ? "BET"
+          : a.type == poker_solver::core::ActionType::kRaise ? "RAISE"
+                                                             : "ALLIN",
+          a.amount));
+    }
+
+    for (const auto& br : branches) {
+      poker_solver::io::SpotJsonInput::SolvedBranch sb;
+      sb.root_probability = br.root_probability;
+      sb.hero_root_strategy_after_lock = br.hero_root_avg_strategy_after_lock;
+      sb.hero_root_action_label = poker_solver::io::ActionLabel(
+          br.hero_root_action.type == poker_solver::core::ActionType::kFold   ? "FOLD"
+          : br.hero_root_action.type == poker_solver::core::ActionType::kCheck ? "CHECK"
+          : br.hero_root_action.type == poker_solver::core::ActionType::kCall  ? "CALL"
+          : br.hero_root_action.type == poker_solver::core::ActionType::kBet   ? "BET"
+          : br.hero_root_action.type == poker_solver::core::ActionType::kRaise ? "RAISE"
+                                                                               : "ALLIN",
+          br.hero_root_action.amount);
+      out.solved_branches.push_back(std::move(sb));
+    }
 
     writer.AppendLine(poker_solver::io::BuildSpotJsonLine(out));
+    writer.Flush();  // ensure completed hands persist even if the process exits early
     ++written;
+
+    if (options.progress_every > 0 && (written % options.progress_every == 0 || written == target)) {
+      const double elapsed_s = overall_timer.ElapsedMillis() / 1000.0;
+      LOG_INFO("Progress: wrote " + std::to_string(written) + "/" + std::to_string(target) +
+               " (skipped_duplicates=" + std::to_string(skipped_duplicates) +
+               ", attempts=" + std::to_string(attempts) + ", elapsed_s=" + std::to_string(elapsed_s) +
+               ")");
+    }
   }
 
   LOG_INFO("Wrote " + std::to_string(written) + " unique spot(s) to " + options.output + ".");

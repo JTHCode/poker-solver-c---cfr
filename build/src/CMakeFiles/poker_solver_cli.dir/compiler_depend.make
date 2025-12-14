@@ -6,14 +6,17 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /home/jthcode/projects/poker_solver_cfr/src/core/board_gen.h \
   /home/jthcode/projects/poker_solver_cfr/src/core/cards.h \
   /home/jthcode/projects/poker_solver_cfr/src/core/game_state.h \
+  /home/jthcode/projects/poker_solver_cfr/src/core/tree.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/json_utils.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/jsonl_dedupe.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/jsonl_writer.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/minijson.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/preflop_range.h \
   /home/jthcode/projects/poker_solver_cfr/src/io/spot_json.h \
+  /home/jthcode/projects/poker_solver_cfr/src/solver/nlhe_cfr.h \
   /home/jthcode/projects/poker_solver_cfr/src/solver/scenario_generator.h \
   /home/jthcode/projects/poker_solver_cfr/src/solver/spot_id.h \
+  /home/jthcode/projects/poker_solver_cfr/src/solver/subtree_expansion.h \
   /home/jthcode/projects/poker_solver_cfr/src/util/hash.h \
   /home/jthcode/projects/poker_solver_cfr/src/util/logging.h \
   /home/jthcode/projects/poker_solver_cfr/src/util/rng.h \
@@ -138,6 +141,7 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/c++/13/clocale \
   /usr/include/c++/13/cmath \
   /usr/include/c++/13/compare \
+  /usr/include/c++/13/csignal \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdio \
@@ -209,30 +213,37 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/libintl.h \
+  /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
+  /usr/include/signal.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/time.h \
+  /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
   /usr/include/x86_64-linux-gnu/asm/errno.h \
   /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
   /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/confname.h \
   /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
   /usr/include/x86_64-linux-gnu/bits/endian.h \
   /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/environments.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
   /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
   /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -242,12 +253,26 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/sigaction.h \
+  /usr/include/x86_64-linux-gnu/bits/sigcontext.h \
+  /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h \
+  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
+  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
+  /usr/include/x86_64-linux-gnu/bits/sigstack.h \
+  /usr/include/x86_64-linux-gnu/bits/sigstksz.h \
+  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
+  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
@@ -268,17 +293,24 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
@@ -287,6 +319,7 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
@@ -314,6 +347,7 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
@@ -321,7 +355,7 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
@@ -361,6 +395,8 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
@@ -369,7 +405,13 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
@@ -381,6 +423,8 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
@@ -391,9 +435,49 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/ss_flags.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigthread.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigstksz.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigstack.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigaction.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/c++/13/bits/unique_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
 
 /usr/include/c++/13/bits/stl_map.h:
 
@@ -413,16 +497,6 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/stl_algo.h:
 
-/usr/include/c++/13/bits/uses_allocator.h:
-
-/usr/include/c++/13/bits/postypes.h:
-
-/usr/include/c++/13/iomanip:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
-
-/usr/include/c++/13/cstdint:
-
 /usr/include/c++/13/bits/regex_scanner.h:
 
 /usr/include/c++/13/cstdlib:
@@ -439,17 +513,19 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/shared_ptr.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
 /usr/include/c++/13/bits/regex_executor.tcc:
+
+/usr/include/c++/13/bits/postypes.h:
+
+/usr/include/c++/13/bits/uses_allocator.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
 /usr/include/c++/13/bits/quoted_string.h:
 
 /usr/include/c++/13/bits/unordered_map.h:
 
 /usr/include/c++/13/bits/regex_constants.h:
-
-/usr/include/c++/13/bits/unordered_set.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
@@ -467,11 +543,7 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/regex_automaton.tcc:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+/usr/include/unistd.h:
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
@@ -483,11 +555,11 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /home/jthcode/projects/poker_solver_cfr/src/util/logging.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
 /usr/include/c++/13/bits/ptr_traits.h:
 
 /usr/include/c++/13/bits/predefined_ops.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
 
 /usr/include/c++/13/iosfwd:
 
@@ -507,13 +579,15 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/locale_facets_nonio.tcc:
 
-/usr/include/c++/13/bits/locale_facets_nonio.h:
+/usr/include/c++/13/bits/locale_facets.h:
 
-/usr/include/c++/13/clocale:
+/usr/include/c++/13/tr1/poly_laguerre.tcc:
 
-/usr/include/c++/13/bits/basic_ios.tcc:
+/home/jthcode/projects/poker_solver_cfr/src/io/minijson.h:
 
-/usr/include/c++/13/pstl/execution_defs.h:
+/usr/include/c++/13/bits/istream.tcc:
+
+/usr/include/c++/13/bits/locale_conv.h:
 
 /usr/include/c++/13/bits/alloc_traits.h:
 
@@ -531,19 +605,21 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /home/jthcode/projects/poker_solver_cfr/src/io/jsonl_writer.h:
 
-/usr/include/x86_64-linux-gnu/bits/time64.h:
+/usr/include/c++/13/cstdint:
 
-/usr/include/c++/13/cstddef:
+/home/jthcode/projects/poker_solver_cfr/src/solver/nlhe_cfr.h:
 
-/home/jthcode/projects/poker_solver_cfr/src/solver/spot_id.h:
-
-/usr/include/c++/13/bits/stl_tempbuf.h:
+/usr/include/c++/13/bits/stl_deque.h:
 
 /usr/include/c++/13/bits/enable_special_members.h:
 
 /usr/include/c++/13/bits/regex.h:
 
 /usr/include/c++/13/backward/binders.h:
+
+/usr/include/c++/13/bits/uniform_int_dist.h:
+
+/usr/include/c++/13/bits/locale_classes.tcc:
 
 /usr/include/c++/13/utility:
 
@@ -556,10 +632,6 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 /home/jthcode/projects/poker_solver_cfr/src/core/board.h:
 
 /home/jthcode/projects/poker_solver_cfr/src/io/json_utils.h:
-
-/usr/include/c++/13/tr1/bessel_function.tcc:
-
-/usr/include/c++/13/initializer_list:
 
 /usr/include/c++/13/array:
 
@@ -575,19 +647,35 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/string_view.tcc:
 
-/usr/include/c++/13/bits/stl_deque.h:
-
 /usr/include/c++/13/bits/locale_facets.tcc:
 
 /usr/include/c++/13/bits/stl_numeric.h:
 
 /home/jthcode/projects/poker_solver_cfr/src/util/rng.h:
 
-/usr/include/c++/13/tr1/poly_laguerre.tcc:
+/usr/include/x86_64-linux-gnu/bits/time.h:
 
-/home/jthcode/projects/poker_solver_cfr/src/io/minijson.h:
+/usr/include/x86_64-linux-gnu/bits/select.h:
 
-/usr/include/c++/13/bits/locale_facets.h:
+/home/jthcode/projects/poker_solver_cfr/src/solver/subtree_expansion.h:
+
+/home/jthcode/projects/poker_solver_cfr/src/core/tree.h:
+
+/usr/include/c++/13/cstddef:
+
+/home/jthcode/projects/poker_solver_cfr/src/solver/spot_id.h:
+
+/usr/include/c++/13/bits/stl_tempbuf.h:
+
+/usr/include/c++/13/initializer_list:
+
+/usr/include/c++/13/tr1/bessel_function.tcc:
+
+/usr/include/c++/13/clocale:
+
+/usr/include/c++/13/bits/basic_ios.tcc:
+
+/usr/include/c++/13/pstl/execution_defs.h:
 
 /usr/include/c++/13/algorithm:
 
@@ -627,6 +715,10 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/bits/invoke.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
+
+/usr/include/x86_64-linux-gnu/bits/environments.h:
+
 /home/jthcode/projects/poker_solver_cfr/src/io/spot_json.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
@@ -642,6 +734,8 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 /usr/include/c++/13/regex:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
 
 /usr/include/c++/13/bits/std_function.h:
 
@@ -673,15 +767,15 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
-/usr/include/c++/13/bits/istream.tcc:
-
-/usr/include/c++/13/bits/locale_conv.h:
-
 /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h:
 
 /usr/include/c++/13/ostream:
 
 /usr/include/c++/13/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/13/bits/locale_facets_nonio.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
@@ -713,13 +807,17 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/typeinfo:
 
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
+
 /usr/include/c++/13/bits/exception.h:
 
 /usr/include/c++/13/bits/memory_resource.h:
 
 /usr/include/c++/13/streambuf:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/c++/13/bits/basic_ios.h:
 
@@ -745,9 +843,9 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
 
-/usr/include/c++/13/bits/uniform_int_dist.h:
+/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
 
-/usr/include/c++/13/bits/locale_classes.tcc:
+/usr/include/c++/13/bits/unordered_set.h:
 
 /usr/include/c++/13/optional:
 
@@ -773,13 +871,15 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/cerrno:
 
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
 /usr/include/c++/13/chrono:
 
 /usr/include/c++/13/system_error:
 
 /usr/include/c++/13/compare:
+
+/usr/include/c++/13/csignal:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/13/ctime:
 
@@ -791,7 +891,13 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/debug/assertions.h:
 
+/usr/include/linux/errno.h:
+
+/usr/include/c++/13/debug/debug.h:
+
 /usr/include/c++/13/exception:
+
+/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
 
 /usr/include/c++/13/bits/stl_pair.h:
 
@@ -841,6 +947,8 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
+
 /usr/include/c++/13/numeric:
 
 /usr/include/c++/13/pstl/glue_numeric_defs.h:
@@ -875,6 +983,8 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/c++/13/tr1/poly_hermite.tcc:
 
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
 /usr/include/c++/13/tr1/special_function_util.h:
 
 /usr/include/stdc-predef.h:
@@ -891,17 +1001,17 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/ctype.h:
 
-/usr/include/c++/13/debug/debug.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+/usr/include/linux/close_range.h:
 
 /usr/include/pthread.h:
 
 /usr/include/wctype.h:
 
 /usr/include/sched.h:
+
+/usr/include/c++/13/iomanip:
+
+/usr/include/signal.h:
 
 /usr/include/endian.h:
 
@@ -929,24 +1039,16 @@ src/CMakeFiles/poker_solver_cli.dir/cli/main.cpp.o: /home/jthcode/projects/poker
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
+/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
+
 /usr/include/c++/13/string_view:
 
 /usr/include/x86_64-linux-gnu/bits/iscanonical.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
-
-/usr/include/time.h:
-
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-/usr/include/x86_64-linux-gnu/bits/timex.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/select.h:
-
-/usr/include/x86_64-linux-gnu/bits/time.h:

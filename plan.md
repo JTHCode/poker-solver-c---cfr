@@ -126,13 +126,13 @@
 - [X] 10) JSONL writer and schema validation test: implement append-only writer, schema builder for metadata/root strategy/branches/ranges/metrics, unit test that writes multiple lines and parses back cleanly.  
   - **Dev Notes:** 12/13/2025: Added `io/jsonl_writer.h` (append-only, newline-enforced) plus a minimal schema builder `io/spot_json.h` producing a single-line JSON object with `metadata`, `ranges`, `root_strategy`, `solved_branches`, `board`, `metrics`. Added a tiny JSON parser `io/minijson.h` for unit testing and `jsonl_writer_tests` to write two lines then parse/validate required keys.
   
-- [ ] 11) Sub-branch solver logic (>= 20% hero actions) and villain-optimal assumption; integrate with CFR runs: after root solve, identify hero actions >= 20% frequency, lock choice, rerun CFR for continuations with villain optimal everywhere; tests to ensure pruning respects threshold and locked action is enforced.  
+- [X] 11) Sub-branch solver logic (>= 20% hero actions) and villain-optimal assumption; integrate with CFR runs: after root solve, identify hero actions >= 20% frequency, lock choice, rerun CFR for continuations with villain optimal everywhere; tests to ensure pruning respects threshold and locked action is enforced.  
   - **Dev Notes:** 12/14/2025: Added `solver/subtree_expansion.h` to solve root strategy, prune hero root actions by threshold (default 20%), and solve each selected branch with hero root action locked and villain using best-response at all nodes. Extended `solver/nlhe_cfr.h` to support root action locks and villain best-response mode. Tests in `subtree_expansion_tests` cover threshold pruning and lock enforcement.
   
-- [ ] 12) CLI loop: generate N situations, solve, append, show progress; add elapsed time display: wire generator + solver + writer; progress reporting per X spots with timing; handle output path/seed parameters.  
-  - **Dev Notes:** 12/14/2025: Added `metadata.spot_id` and JSONL dedupe/resume support in CLI by scanning existing output for spot_id values and skipping duplicates; consider adding a `--resume`/`--no_resume` flag if you want optional behavior.
+- [X] 12) CLI loop: generate N situations, solve, append, show progress; add elapsed time display: wire generator + solver + writer; progress reporting per X spots with timing; handle output path/seed parameters.  
+  - **Dev Notes:** 12/14/2025: Implemented CLI loop integrating scenario generation + CFR root solve + branch solves + JSONL append; added progress logging and per-spot `solve_time_ms`. Added `metadata.spot_id` resume/dedupe by scanning existing output and skipping duplicates. CLI flushes after each JSONL line and handles SIGINT/SIGTERM to exit cleanly without losing completed writes.
   
-- [ ] 13) Performance tuning: cache allocations, preallocate regret tables, profiling; enable CFR+ if helpful: benchmark iterations/sec, adjust memory layout, optional CFR+ switch; document settings.  
+- [ ] 13) Performance tuning: cache allocations, preallocate regret tables, profiling; benchmark iterations/sec, adjust memory layout; document settings.  
   - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
   
 - [ ] 14) Robustness pass: input validation, error messages, config for iterations, seed, output path: add argument validation, graceful handling of missing ranges, safe defaults, and logging for failures.  
@@ -141,8 +141,3 @@
 - [ ] 15) Final integration tests and sample run producing a few JSONL lines: run end-to-end on small iteration count, validate JSONL schema, and capture sample output artifacts for reference.  
   - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
   
-
-## Next Steps to Start Coding
-- Set up build system and empty module structure from the folder layout.
-- Write unit tests for cards, ranges, and betting before solver work.
-- Implement CFR toy game test harness to lock down solver core behavior.

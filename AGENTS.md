@@ -14,7 +14,9 @@
 - Primary environment: WSL/Linux (Bash). Windows batch scripts in `scripts/` are legacy only.
 - Configure (Debug recommended while developing): `cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug` (omit `-G Ninja` if not installed).
 - Build all: `cmake --build build -j$(nproc)` (or `cmake --build build` with Ninja handling jobs).
-- Run unit/integration tests: `ctest --test-dir build --output-on-failure`.
+- Run unit/integration tests: `./scripts/test.sh` (or `ctest --test-dir build --output-on-failure`).
+- Sample run (writes/validates JSONL): `./scripts/sample_run.sh`.
+- Benchmark + quality report: `./scripts/bench.sh`.
 - Sample run (after build): `./build/bin/solver --number_of_situations 10 --output out.jsonl --seed 42 --iterations 2000 --branch_threshold 0.20`.
   - JSONL resume/dedupe: the CLI computes `metadata.spot_id` and skips any spots already present in the existing output file.
   - Durability: the CLI flushes each JSONL line so completed spots survive early exit (SIGINT/SIGTERM).

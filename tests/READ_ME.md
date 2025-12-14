@@ -4,6 +4,16 @@
 ./scripts/test.sh
 ```
 
+Notes:
+- The unit test suite includes an end-to-end CLI smoke test (`cli_smoke_tests`) that runs the solver for a few spots and validates JSONL output shape + `metadata.spot_id` uniqueness.
+
+**Sample run (writes JSONL + validates):**
+
+```bash
+./scripts/sample_run.sh
+./scripts/sample_run.sh --build-dir build_rel --build-type Release --situations 20 --iterations 500 --output out.jsonl
+```
+
 **Benchmarking (situations/minute):**
 
 Runs the solver for a fixed number of situations and prints throughput plus basic JSONL stats (avg/p50/p90/p99 solve time, branches). Uses a temporary JSONL file by default.
@@ -33,7 +43,7 @@ cmake --build build -j$(nproc)
 Notes:
 - Prints Kuhn exploitability and a small river-only NLHE exploitability estimate (both as `0.5 * (BR0 - BR1)`).
 
-**Windows (legacy):**
+**Windows (legacy / not maintained):**
 
 ```powershell
 cmake -S . -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug

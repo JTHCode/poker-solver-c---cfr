@@ -6,6 +6,7 @@ Notes:
 - Benchmarks should be run in Release (`./scripts/bench.sh` defaults to `build_rel` + `Release`).
 - Throughput is reported as situations/min.
 - Quality is reported as exploitability from `build/tests/quality_report` (Kuhn + a small river-only NLHE abstraction).
+- Reproduce: `./scripts/bench.sh` (or `./scripts/bench.sh --situations 200 --iterations 2000 --seed 42 --branch-threshold 0.20`).
 
 ## Environment
 

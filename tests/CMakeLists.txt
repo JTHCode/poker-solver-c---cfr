@@ -222,3 +222,18 @@ else()
 endif()
 
 add_test(NAME hand_evaluator_tests COMMAND hand_evaluator_tests)
+
+add_executable(cli_smoke_tests
+  cli_smoke_tests.cpp
+)
+
+target_compile_definitions(cli_smoke_tests PRIVATE SOLVER_PATH="${CMAKE_BINARY_DIR}/bin/solver")
+target_link_libraries(cli_smoke_tests PRIVATE poker_solver_core Threads::Threads)
+
+if(MSVC)
+  target_compile_options(cli_smoke_tests PRIVATE /W4 /permissive- /WX-)
+else()
+  target_compile_options(cli_smoke_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -UNDEBUG)
+endif()
+
+add_test(NAME cli_smoke_tests COMMAND cli_smoke_tests)

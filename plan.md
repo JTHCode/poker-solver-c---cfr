@@ -12,7 +12,7 @@
   - `io/` (`jsonl_writer`, `preflop_loader`, `config`)
   - `util/` (`rng`, `logging`, `timer`, `metrics`)
 - `tests/` mirroring `src/` layout
-- `data/preflop-ranges/` (given)
+- `preflop-ranges/` (given)
 - `scripts/` (benchmarks, sample runs)
 - `build/` (artifacts, cmake cache, etc.)
 
@@ -132,12 +132,12 @@
 - [X] 12) CLI loop: generate N situations, solve, append, show progress; add elapsed time display: wire generator + solver + writer; progress reporting per X spots with timing; handle output path/seed parameters.  
   - **Dev Notes:** 12/14/2025: Implemented CLI loop integrating scenario generation + CFR root solve + branch solves + JSONL append; added progress logging and per-spot `solve_time_ms`. Added `metadata.spot_id` resume/dedupe by scanning existing output and skipping duplicates. CLI flushes after each JSONL line and handles SIGINT/SIGTERM to exit cleanly without losing completed writes.
   
-- [ ] 13) Performance tuning: cache allocations, preallocate regret tables, profiling; benchmark iterations/sec, adjust memory layout; document settings.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 13) Performance tuning: cache allocations, preallocate regret tables, profiling; benchmark iterations/sec, adjust memory layout; document settings.  
+  - **Dev Notes:** Completed in `upgrade-plan.md`
   
-- [ ] 14) Robustness pass: input validation, error messages, config for iterations, seed, output path: add argument validation, graceful handling of missing ranges, safe defaults, and logging for failures.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 14) Robustness pass: input validation, error messages, config for iterations, seed, output path: add argument validation, graceful handling of missing ranges, safe defaults, and logging for failures.  
+  - **Dev Notes:** 12/14/2025: Hardened `src/cli/main.cpp` with output-path validation (directory exists / not a directory), preflop range validation (loads/validates required `preflop-ranges/` files up-front), and top-level exception handling; scenario generation failures are now logged and skipped instead of crashing.
   
-- [ ] 15) Final integration tests and sample run producing a few JSONL lines: run end-to-end on small iteration count, validate JSONL schema, and capture sample output artifacts for reference.  
-  - **Dev Notes:** _Add observations, setup quirks, or reminders relevant to this step._
+- [X] 15) Final integration tests and sample run producing a few JSONL lines: run end-to-end on small iteration count, validate JSONL schema, and capture sample output artifacts for reference.  
+  - **Dev Notes:** 12/14/2025: Added `tests/cli_smoke_tests.cpp` as an end-to-end CTest that runs the CLI solver for 3 spots and validates JSONL schema + `spot_id` uniqueness; added `scripts/sample_run.sh` for a quick local sample run + JSONL validation and a truncated sample line printout.
   

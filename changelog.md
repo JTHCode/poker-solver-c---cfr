@@ -23,5 +23,6 @@ _____
 **12/14/2025** *1:15am CST*: Updated `scripts/test.sh` to optionally check an existing JSONL output for duplicate `metadata.spot_id` after tests (defaults to `out.jsonl` if present, or pass a path as arg 2).
 **12/14/2025** *1:35am CST*: Implemented phase 12 CLI integration: added `--iterations`, `--branch_threshold`, and progress logging; CLI now runs root CFR + branch solves (villain best-response) per scenario and writes root strategy/branches into JSONL. Added signal handling and per-line flush to ensure completed spots are persisted on early exit.
 **12/14/2025** *2:05am CST*: Added `scripts/bench.sh` benchmark runner to build (optional), run N situations, and print throughput (situations/min) plus JSONL-derived stats (avg/p50/p90/p99 solve time, branch counts); documented usage in `tests/READ_ME.md`.
+**12/14/2025** *2:20am CST*: Added `upgrade-plan.md` with a phased checklist to reach correctness/benchmark gates required for a meaningful CFR vs CFR+ comparison (without implementing CFR+).
 **12/13/2025** *1:30pm CST*: The project has been moved from a Windows filesystem to WSL (Ubuntu, Linux). The project directory was renamed from: "C++ Poker Solver CFR" to: "poker_solver_cfr"
 **12/13/2025** *1:50pm CST*: Reinstalled cmake and ninja.
